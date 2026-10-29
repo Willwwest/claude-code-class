@@ -151,6 +151,7 @@ footer a{color:var(--white)}
     <li><a href="#finish">Finish line</a></li>
     <li><a href="#why">Why</a></li>
     <li><a href="#setup">Setup</a></li>
+    <li><a href="#accounts">Parents and kids</a></li>
     <li><a href="#steps">8 steps</a></li>
     <li><a href="#spark-map">Spark map</a></li>
     <li><a href="#habits">Habits</a></li>
@@ -162,9 +163,10 @@ footer a{color:var(--white)}
 
 <section id="finish">
   <h2>The finish line</h2>
-  <p class="section-note">You're done when all five of these are true.</p>
+  <p class="section-note">You're done when all six of these are true.</p>
   <div class="card">
     <ul class="list">
+      <li>Each parent has one account with all their kids under it, and each kid has their own record.</li>
       <li>The front desk sees who is active and who is past due when a kid checks in.</li>
       <li>Members, families, classes, attendance, levels, waivers and billing records live in The LAB's own app.</li>
       <li>Staff open it from a link on their phones and sign in.</li>
@@ -212,6 +214,35 @@ footer a{color:var(--white)}
   </div>
 </section>
 
+<section id="accounts">
+  <h2>Parent and child accounts</h2>
+  <p class="section-note">This is the core of the app. Every step below builds on it, so settle it in step 1 and check it at every step after.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>How it works</h3>
+      <ul class="list">
+        <li><strong>Parent account:</strong> one sign-in per parent. It holds contact details, billing and the signed waiver.</li>
+        <li><strong>Child accounts:</strong> each kid sits under a parent and has their own class, level, attendance and membership status.</li>
+        <li><strong>A family can have two parents.</strong> Both see and manage the same kids.</li>
+        <li><strong>One bill per family.</strong> It covers every kid's membership.</li>
+        <li><strong>One waiver per family,</strong> naming each kid it covers. Adding a kid adds them to it.</li>
+        <li><strong>Front desk:</strong> search a kid and see the parent, or search a parent and see every kid. Check in siblings with one tap.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Decide these in step 1</h3>
+      <ul class="list dash">
+        <li>Is a membership per kid or per family? Can one sibling be frozen while another stays active?</li>
+        <li>Sibling discount: how much, and from which kid on?</li>
+        <li>What does a parent see when they sign in: schedule, attendance, levels, bills?</li>
+        <li>Who can pick up a kid, and is that stored on the family?</li>
+        <li>When a kid turns 18 or a parent account closes, what happens to the kid's record?</li>
+      </ul>
+      <div class="callout info"><strong>Already in the LAB app</strong><p>The <code>lab-skill-unlocks</code> database already stores families, guardians (more than one per family, one marked primary) and athletes under each family. Step 7 builds on it.</p></div>
+    </div>
+  </div>
+</section>
+
 <section id="steps">
   <h2>The 8 steps</h2>
   <p class="section-note">Each step ends with something you can open, and a commit (a saved checkpoint). Tick it when it's true. The tick is saved in this browser.</p>
@@ -220,7 +251,7 @@ footer a{color:var(--white)}
     <div class="step-head"><div class="step-num">1</div><div><h3>Write the brief</h3><p class="step-meta">45 min · no code yet</p></div></div>
     <p>Claude interviews you and writes <code>SPARK-BRIEF.md</code>. Every later prompt points back to it. Before you start, list the Spark screens your staff open in a normal week.</p>
     <p class="label">Type this</p>
-    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>We're replacing Spark Membership, the member CRM and billing software The LAB pays for, with our own app. Interview me one question at a time and write SPARK-BRIEF.md: who uses it at the desk and on the floor, the first job it must do, which Spark features we use every week and which we never touch, our brand, what data we have, and where it will live. Leave a blank where I don't know.</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>We're replacing Spark Membership, the member CRM and billing software The LAB pays for, with our own app. Interview me one question at a time and write SPARK-BRIEF.md: who uses it at the desk and on the floor, how parent and child accounts work (a parent account with each kid under it, second parents, one bill and one waiver per family, membership per kid or per family), the first job it must do, which Spark features we use every week and which we never touch, our brand, what data we have, and where it will live. Leave a blank where I don't know.</pre></div>
     <p class="label">Then</p>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/init</pre></div>
     <p><code>/init</code> writes <code>CLAUDE.md</code>, which Claude reads at the start of every session.</p>
@@ -229,19 +260,19 @@ footer a{color:var(--white)}
 
   <article class="step" id="step-2">
     <div class="step-head"><div class="step-num">2</div><div><h3>Build the first job</h3><p class="step-meta">1 hour</p></div></div>
-    <p>Build the one job the desk needs most, and open it the same day. From the owner calls, that job is: find the kid, see if they're active or past due, check them in.</p>
+    <p>Build the one job the desk needs most, and open it the same day. From the owner calls, that job is: find the kid, see if they're active or past due, check them in. Build it on parent and child accounts from the start. Adding them later means rebuilding.</p>
     <p class="label">Type this</p>
-    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Build the first job only: the front desk searches for a kid, sees whether the membership is active or past due, and checks them in to today's class. Use made-up sample members. Then pull it up in the browser for me.</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Build the first job only, on parent and child accounts: each parent account has its kids under it. The front desk searches for a kid or a parent, sees the whole family with each kid's membership status (active or past due), and checks in one kid or all the siblings to today's class. Use made-up sample families. Then pull it up in the browser for me.</pre></div>
     <p class="label">Then</p>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Set up git for this project and commit it.</pre></div>
-    <label class="check"><input type="checkbox" data-step="2"> I checked in a sample kid in the browser, and it's committed</label>
+    <label class="check"><input type="checkbox" data-step="2"> I found a sample parent, saw their kids and checked in two siblings, and it's committed</label>
   </article>
 
   <article class="step" id="step-3">
     <div class="step-head"><div class="step-num">3</div><div><h3>Map Spark</h3><p class="step-meta">1 hour · Claude does the reading</p></div></div>
     <p>A written checklist turns "make it like Spark" into work you can tick off. Claude sends helper agents to read Spark's public pages and help center, then merges what they find into one table.</p>
     <p class="label">Type this</p>
-    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Find screenshots, documentation and everything we'd need for parity with Spark Membership. Public sources only: sparkmembership.com, help.sparkmembership.com including the monthly release notes, and their YouTube tutorials. Write docs/spark-parity.md as a table: area, what Spark does, our plan, status. Keep screenshots in a gitignored folder. End with a short list of where we can beat Spark.</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Find screenshots, documentation and everything we'd need for parity with Spark Membership. Public sources only: sparkmembership.com, help.sparkmembership.com including the monthly release notes, and their YouTube tutorials. Write docs/spark-parity.md as a table: area, what Spark does, our plan, status. Give its own section to how Spark links parents and children: separate records or one contact, family billing, and what a parent sees in the member app. Keep screenshots in a gitignored folder. End with a short list of where we can beat Spark.</pre></div>
     <p class="label">Then you decide</p>
     <p>Mark each row <strong>must-have</strong>, <strong>later</strong> or <strong>skip</strong>. Skip what nobody uses. That decision is yours, not Claude's.</p>
     <label class="check"><input type="checkbox" data-step="3"> docs/spark-parity.md is marked and committed</label>
@@ -259,7 +290,7 @@ footer a{color:var(--white)}
     <div class="step-head"><div class="step-num">5</div><div><h3>The big build</h3><p class="step-meta">An afternoon · mostly waiting</p></div></div>
     <p><code>/goal</code> sets a finish line that Claude keeps working toward across many steps. It reads the wording literally, so write what you'll accept. Ask for the plan first and read it before you say go.</p>
     <p class="label">Type this</p>
-    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/goal build out our Spark replacement with every must-have row in docs/spark-parity.md, make check-in and past-due alerts excellent, and the whole thing uses The LAB brand through the design system and tokens. Every page works at phone and desktop width with no console errors.</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/goal build out our Spark replacement with every must-have row in docs/spark-parity.md, built on parent accounts with each child under them as SPARK-BRIEF.md describes, make check-in and past-due alerts excellent, and the whole thing uses The LAB brand through the design system and tokens. Every page works at phone and desktop width with no console errors.</pre></div>
     <p class="label">Before it codes</p>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Plan first, don't edit yet. Show me the shared foundation you'll write and how you'll split the work between helper agents, with the files each one owns.</pre></div>
     <p>Read the plan, then say "go". You can send messages while it works. When it reports back, ask to see the result: "show me every page at phone size."</p>
@@ -271,7 +302,7 @@ footer a{color:var(--white)}
     <p>A shared link with realistic sample data is how Travis, Ally and the coaches try it. GitHub Pages is free, and on a free account the site is public. Use sample data only.</p>
     <p class="label">Type these, one at a time</p>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Can we get this stood up on GitHub Pages so I can share it</pre></div>
-    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Load this with dummy data that looks like The LAB: our real class names, families with siblings, active, past-due, frozen and cancelled memberships, and attendance. Mark it clearly as sample, and make sure it shows up on the live site.</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Load this with dummy data that looks like The LAB: our real class names, parent accounts with one to three kids each, some with a second parent, active, past-due, frozen and cancelled memberships, and attendance. Mark it clearly as sample, and make sure it shows up on the live site.</pre></div>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>push to live once it's done and then test it in browser on live, not localhost</pre></div>
     <label class="check"><input type="checkbox" data-step="6"> The live link works on my phone and shows sample data</label>
   </article>
@@ -280,9 +311,9 @@ footer a{color:var(--white)}
     <div class="step-head"><div class="step-num">7</div><div><h3>Connect real data</h3><p class="step-meta">A few sessions · needs accounts</p></div></div>
     <p>Shared data across phones, real sign-ins, card payments and automatic texts all need a server. The LAB app (the <code>lab-skill-unlocks</code> repo) already has one, plus a Spark webhook that receives member status, past-due and join dates, check-in, and a consent log. Reuse it before building new.</p>
     <p class="label">Type this</p>
-    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>&lt;path to lab-skill-unlocks&gt; is our existing LAB app. It already has a Supabase backend, a Spark webhook, check-in and a consent log. Read it and tell me what we should reuse. Then plan how to move members, families, memberships and attendance onto it behind real sign-ins. Don't change that repo until I approve the plan.</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>&lt;path to lab-skill-unlocks&gt; is our existing LAB app. It already has a Supabase backend with families, guardians and athletes, a Spark webhook, check-in and a consent log. Read it and tell me what we should reuse. Then plan how to move parent accounts, their kids, memberships and attendance onto it behind real sign-ins, where a parent sees only their own kids. Don't change that repo until I approve the plan.</pre></div>
     <div class="callout warn"><strong>Billing is the hard part</strong><p>Recurring card and bank payments need a processor (Stripe or similar), a server and your accounts. Decide who bills before you build it: the new app, or another system. Ask Spark in writing whether stored cards can move to the new processor. If they can't, families re-enter cards.</p></div>
-    <label class="check"><input type="checkbox" data-step="7"> Real members load behind a sign-in, not on the public page</label>
+    <label class="check"><input type="checkbox" data-step="7"> A parent signs in and sees only their own kids, and none of it is on the public page</label>
   </article>
 
   <article class="step" id="step-8">
@@ -290,13 +321,13 @@ footer a{color:var(--white)}
     <p>This step is a checklist, not a prompt. Do it in this order.</p>
     <ul class="list dash">
       <li>Find the term end date in the Spark contract. Put the non-renewal deadline, 30 days before it, on the calendar.</li>
-      <li>While the account is still paid, export: All Contacts with every column, Past Due Memberships, each waiver and form's submissions (CSV), signed membership agreements, and attendance and rank history.</li>
+      <li>While the account is still paid, export: All Contacts with every column (including the fields that link parents to kids), Past Due Memberships, each waiver and form's submissions (CSV), signed membership agreements, and attendance and rank history.</li>
       <li>Ask Spark's data team in writing for a full archive. Don't count on the 30-day window after the contract ends.</li>
       <li>Waivers: get an Arizona attorney to review the app's waiver text, and the insurance carrier's sign-off, before it replaces Spark's form.</li>
       <li>Run both systems side by side for two weeks. Check that the active and past-due counts match each day.</li>
       <li>Move billing, then send the non-renewal notice in writing.</li>
     </ul>
-    <div class="callout info"><strong>Ask Claude to check the exports</strong><p>Put the export files in a gitignored folder and ask: "Compare these Spark exports with the app's data and list every member, family or waiver that's missing." Real member data never goes in the public repo.</p></div>
+    <div class="callout info"><strong>Ask Claude to check the exports</strong><p>Put the export files in a gitignored folder and ask: "Compare these Spark exports with the app's data and list every parent, kid or waiver that's missing, and every kid not linked to a parent." Real member data never goes in the public repo.</p></div>
     <label class="check"><input type="checkbox" data-step="8"> Everything is exported and checked, and the notice is sent</label>
   </article>
 </section>
@@ -308,7 +339,7 @@ footer a{color:var(--white)}
     <table>
       <thead><tr><th>Area</th><th>What Spark does</th><th>What it needs</th></tr></thead>
       <tbody>
-        <tr><td>Members and families</td><td>Contacts, parents linked to kids, emergency contacts</td><td><span class="tag good">Browser first</span></td></tr>
+        <tr><td>Parent and child accounts</td><td>Contacts with parent fields, kids, emergency contacts. Step 3 confirms how Spark links them.</td><td><span class="tag good">LAB app has families</span></td></tr>
         <tr><td>Check-in and attendance</td><td>Check-in manager, attendance counts</td><td><span class="tag good">LAB app has it</span></td></tr>
         <tr><td>Classes and schedule</td><td>Class schedule and enrollment</td><td><span class="tag good">Browser first</span></td></tr>
         <tr><td>Ranks and levels</td><td>Rank tracking and history, attendance needed per rank</td><td><span class="tag good">LAB app has levels</span></td></tr>

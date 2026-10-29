@@ -8,6 +8,7 @@ Answer these with the student and save the answers as `SPARK-BRIEF.md` in their 
 2. What problem should the first version solve? Describe it in one sentence, the way the Axis owner did: "keep track of tint stock from the jobs we do."
 3. Is Spark new, or does code already exist? If it exists: where is it, what's it built with, and what works today?
 4. Who will use it on a phone, and who at a desk?
+4b. Parent and child accounts (the owner's top priority): one parent account with each kid under it. Can a family have two parents? Is a membership per kid or per family? One bill and one waiver per family? What does a parent see when signed in?
 
 ## The bar to clear
 
