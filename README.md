@@ -2,6 +2,10 @@
 
 This is the context a teaching agent needs to run a hands-on Claude Code class. The student is new to Claude Code. Over the course they build an app for their company's product, **Spark**, using the method that built the Axis Glass Tinting shop app in about two days.
 
+## Charlie's guide site
+
+`site/` is a one-page guide for Charlie: setup, eight steps with copyable prompts, a map of what Spark does, and the cut-over checklist. It's plain HTML with no build step, on The LAB brand. `.github/workflows/pages.yml` publishes it to GitHub Pages on every push to `main` that touches `site/`. Live at https://willwwest.github.io/claude-code-class/ once Pages is turned on.
+
 ## How to start the class
 
 1. Open a terminal in this folder and run `claude`. Claude Code reads `CLAUDE.md` automatically, and that file sets it up as the instructor.

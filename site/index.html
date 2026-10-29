@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build The LAB's Spark</title>
+<meta name="description" content="Charlie's step-by-step guide to replacing Spark Membership with an app The LAB owns, built with Claude Code.">
+<meta name="theme-color" content="#0f0e54">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/argentum-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap">
+<style>
+@font-face{font-family:Argentum;src:url(assets/argentum-800.woff2) format("woff2");font-weight:800;font-display:swap}
+:root{
+  --ink:#090d19;--navy:#0f0e54;--cyan:#22bced;--cyan-ink:#0b86b5;--mint:#c2e6db;--mint-ink:#2fb28b;
+  --sky-pale:#e1f4fa;--white:#fff;--gray-50:#f4f7fc;--gray-100:#e6eaf3;--gray-200:#cdd5e6;--gray-500:#767b96;--gray-700:#464b66;
+  --good-bg:#e3f6ee;--good:#0e5a44;--warn-bg:#fff1d6;--warn:#7a4b00;--info-bg:#e6f8fe;--info:#075c80;
+  --bg:var(--gray-50);--surface:var(--white);--text:var(--ink);--text-2:var(--gray-700);--text-3:var(--gray-500);--border:var(--gray-100);
+  --on-ink-2:#bfd2ee;--focus:rgba(34,188,237,.45);
+  --grad-panel:linear-gradient(100deg,#0f0e54 0%,#0b1d84 34%,#0a35b4 66%,#1b7fde 100%);
+  --dots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Crect x='5' y='5' width='3.4' height='3.4' rx='.6' fill='%2394d2ff'/%3E%3C/svg%3E");
+  --head:Argentum,"Work Sans",system-ui,sans-serif;--body:"Work Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+  --r-card:20px;--r-sm:12px;--target:44px;--wrap:880px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.6 var(--body);-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:var(--head);font-weight:800;line-height:1.15;color:var(--navy);margin:0 0 .5em}
+h1{font-size:clamp(2.1rem,6vw,3.4rem);color:var(--white);letter-spacing:-.01em}
+h2{font-size:clamp(1.6rem,4vw,2.1rem)}
+h3{font-size:1.25rem}
+p{margin:0 0 1em}
+a{color:var(--cyan-ink);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+code{font-family:var(--mono);font-size:.88em;background:var(--gray-100);padding:.1em .35em;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 16px}
+
+/* Hero */
+.hero{background:var(--dots) 0 0/14px 14px,var(--grad-panel);background-blend-mode:soft-light,normal;color:var(--white);padding:28px 0 56px}
+.hero .logo{width:96px;height:auto;display:block;margin-bottom:40px}
+.eyebrow{font:600 .8rem/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin:0 0 14px}
+.hero .lead{font-size:1.15rem;color:var(--on-ink-2);max-width:40em}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:var(--target);padding:0 22px;border-radius:999px;font:600 1rem/1 var(--body);text-decoration:none;border:0;cursor:pointer}
+.btn-primary{background:var(--cyan);color:var(--navy)}
+.btn-secondary{background:var(--mint);color:var(--navy)}
+.meter{margin-top:32px;max-width:420px}
+.meter-row{display:flex;justify-content:space-between;font-size:.9rem;color:var(--on-ink-2);margin-bottom:8px}
+.meter-bar{height:10px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden}
+.meter-fill{height:100%;width:0;background:var(--cyan);border-radius:999px;transition:width .3s}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:5;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav ul{display:flex;gap:4px;margin:0 auto;padding:8px 16px;list-style:none;overflow-x:auto;max-width:var(--wrap);scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav a{display:flex;align-items:center;min-height:var(--target);padding:0 14px;border-radius:999px;color:var(--white);text-decoration:none;font-weight:600;font-size:.92rem;white-space:nowrap}
+.nav a:hover{background:rgba(255,255,255,.1)}
+
+/* Sections */
+main section{padding:56px 0 8px}
+.section-note{color:var(--text-2);max-width:40em;margin-bottom:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:24px}
+.grid{display:grid;gap:16px}
+@media (min-width:700px){.grid-2{grid-template-columns:1fr 1fr}}
+.list{margin:0;padding:0;list-style:none}
+.list li{position:relative;padding-left:30px;margin-bottom:12px}
+.list li::before{content:"";position:absolute;left:0;top:.35em;width:18px;height:18px;border-radius:50%;background:var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.2l2.6 2.6L13 6.4' fill='none' stroke='%230f0e54' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
+.list.dash li::before{background:var(--cyan);width:8px;height:8px;top:.65em;left:5px}
+.stat{font-family:var(--head);font-weight:800;font-size:2rem;color:var(--navy);line-height:1;margin-bottom:6px}
+.stat-note{color:var(--text-2);font-size:.95rem;margin:0}
+.src{font-size:.85rem;color:var(--text-3);margin-top:16px}
+.callout{border-radius:var(--r-sm);padding:16px 18px;margin:16px 0;font-size:.97rem}
+.callout strong{display:block;margin-bottom:2px}
+.callout.warn{background:var(--warn-bg);color:var(--warn)}
+.callout.info{background:var(--info-bg);color:var(--info)}
+.callout p:last-child{margin:0}
+
+/* Steps */
+.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:24px;margin-bottom:20px;transition:border-color .2s,box-shadow .2s}
+.step.done{border-color:var(--mint-ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--mint-ink) 18%,transparent)}
+.step-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}
+.step-num{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:var(--navy);color:var(--white);font:800 1.3rem/1 var(--head)}
+.step.done .step-num{background:var(--mint-ink)}
+.step-head h3{margin:4px 0 2px}
+.step-meta{font-size:.88rem;color:var(--text-3);margin:0}
+.label{font:600 .78rem/1 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan-ink);margin:20px 0 8px}
+.prompt{position:relative;background:var(--ink);color:var(--white);border-radius:var(--r-sm);margin:0 0 10px}
+.prompt pre{margin:0;padding:16px 16px 16px;font:400 .92rem/1.55 var(--mono);white-space:pre-wrap;word-break:break-word}
+.prompt-bar{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 4px 16px;border-bottom:1px solid rgba(255,255,255,.1);font-size:.8rem;color:var(--on-ink-2)}
+.copy{min-height:36px;min-width:72px;padding:0 14px;border-radius:999px;border:0;background:var(--cyan);color:var(--navy);font:600 .85rem/1 var(--body);cursor:pointer}
+.copy.ok{background:var(--mint)}
+.check{display:flex;gap:12px;align-items:center;margin-top:20px;padding:12px 16px;border-radius:var(--r-sm);background:var(--gray-50);cursor:pointer;min-height:var(--target);font-weight:600}
+.check input{width:22px;height:22px;accent-color:var(--mint-ink);flex:none;margin:0}
+.step.done .check{background:var(--good-bg);color:var(--good)}
+
+/* Table */
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;padding:14px 16px;vertical-align:top;border-bottom:1px solid var(--border)}
+th{font-weight:600;color:var(--text-2);background:var(--gray-50);font-size:.85rem}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;color:var(--navy)}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.8rem;font-weight:600;white-space:nowrap}
+.tag.good{background:var(--good-bg);color:var(--good)}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+@media (max-width:640px){
+  thead{display:none}
+  table,tbody,tr,td{display:block}
+  tr{padding:14px 16px;border-bottom:1px solid var(--border)}
+  td{padding:2px 0;border:0}
+  td:first-child{font-size:1.05rem;margin-bottom:2px}
+  td:last-child{margin-top:6px}
+}
+
+/* Help */
+details{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);margin-bottom:10px}
+summary{cursor:pointer;padding:14px 18px;font-weight:600;min-height:var(--target);list-style-position:inside}
+details>div{padding:0 18px 16px;color:var(--text-2)}
+details>div p:last-child{margin:0}
+
+footer{margin-top:64px;background:var(--navy);color:var(--on-ink-2);padding:32px 0;font-size:.9rem}
+footer a{color:var(--white)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{.nav,.copy,.hero .actions{display:none}.hero{background:var(--navy)}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <svg class="logo" viewBox="0 0 117 56" role="img" aria-label="The LAB: Learn, Adapt, Build"><g fill="#fff"><path d="M33.9609 41.2614L44.9577 20.6281L65.9279 31.8023L52.5043 6.61173L56.0432 -2.67029e-05L78.0368 41.2614L70.3281 41.2918L47.5315 29.1069L41.0135 41.2639H33.9635L33.9609 41.2614Z"/><path d="M6.28497 0.00577545H0V41.2368H29.1044L32.5825 34.8353L6.28497 34.8454V0.00577545Z"/><path d="M112.299 19.8808C114.017 17.986 114.888 15.5313 114.888 12.575V11.7593C114.888 8.25833 113.566 5.3223 111.068 3.27038C108.489 1.15512 104.704 0.0379639 100.117 0.0379639H81.918V41.1879H101.832C106.417 41.1879 110.204 40.0708 112.78 37.9555C115.281 35.9036 116.601 32.9676 116.601 29.4666V28.6509C116.601 24.8409 115.114 21.8137 112.297 19.8808H112.299ZM110.508 29.0005V29.4083C110.508 33.1094 107.686 34.9865 102.118 34.9865H88.0104V23.7111H103.261C106.926 23.7111 110.506 24.1189 110.506 28.998L110.508 29.0005ZM88.0129 17.5123V6.23934H100.406C105.971 6.23934 108.796 8.11647 108.796 11.8175V12.2254C108.796 17.1044 105.216 17.5123 101.551 17.5123H88.0155H88.0129Z"/><path d="M0.111328 49.0289H1.14742V54.2575H4.41277V55.2227H0.111328V49.0289Z"/><path d="M10.6925 54.2746V55.2221H6.08203V49.0283H10.6393V49.9656H7.10799V51.6198H10.4873V52.5394H7.10799V54.2746H10.6925Z"/><path d="M17.0004 53.9402H13.6743L13.1068 55.2221H11.9922L14.7712 49.0283H15.9212L18.6901 55.2221H17.5653L16.9979 53.9402H17.0004ZM14.072 53.0004H16.6027L15.3386 50.072L14.072 53.0004Z"/><path d="M22.5563 53.1068H21.2998V55.2221H20.2637V49.0283H23.1668C24.4942 49.0283 25.3606 49.8415 25.3606 51.0726C25.3606 52.0986 24.75 52.8332 23.7595 53.046L25.6443 55.2221H24.3523L22.5563 53.1068ZM23.1566 49.9833H21.2896V52.1594H23.1566C23.8913 52.1594 24.3346 51.7515 24.3346 51.0701C24.3346 50.3886 23.8913 49.9808 23.1566 49.9808V49.9833Z"/><path d="M32.7042 49.0283V55.2221H31.7669L28.423 50.799L28.4306 52.7724V55.2221H27.3945V49.0283H28.3318L31.6757 53.4513L31.6681 51.6021V49.0283H32.7042Z"/><path d="M38.9508 53.1321H37.0762V51.2575H38.9508V53.1321Z"/><path d="M47.6098 53.9402H44.2836L43.7162 55.2221H42.6016L45.3805 49.0283H46.5306L49.2995 55.2221H48.1747L47.6072 53.9402H47.6098ZM44.6788 53.0004H47.2095L45.9454 50.072L44.6788 53.0004Z"/><path d="M56.3676 52.1239C56.3676 53.9808 55.1112 55.2195 53.2442 55.2195H50.873V49.0258H53.2442C55.1112 49.0258 56.3676 50.2645 56.3676 52.1214V52.1239ZM55.3239 52.1239C55.3239 50.8497 54.4753 49.9833 53.2442 49.9833H51.9091V54.2645H53.2442C54.4829 54.2645 55.3239 53.3981 55.3239 52.1239Z"/><path d="M62.2231 53.9402H58.8969L58.3295 55.2221H57.2148L59.9938 49.0283H61.1439L63.9127 55.2221H62.788L62.2205 53.9402H62.2231ZM59.2946 53.0004H61.8253L60.5613 50.072L59.2946 53.0004Z"/><path d="M70.6111 51.1866C70.6111 52.4862 69.727 53.3449 68.3717 53.3449H66.5224V55.2195H65.4863V49.0258H68.3717C69.7244 49.0258 70.6111 49.8845 70.6111 51.1841V51.1866ZM69.5851 51.1866C69.5851 50.452 69.081 49.9732 68.321 49.9732H66.5174V52.4076H68.321C69.081 52.4076 69.5851 51.9289 69.5851 51.1866Z"/><path d="M76.8019 49.9833H74.793V55.2221H73.7569V49.9833H71.748V49.0283H76.7993V49.9833H76.8019Z"/><path d="M82.0641 53.1321H80.1895V51.2575H82.0641V53.1321Z"/><path d="M91.5996 53.5045C91.5996 54.6014 90.794 55.2221 89.3704 55.2221H86.4141V49.0283H89.3704C90.6344 49.0283 91.4045 49.6388 91.4045 50.6648C91.4045 51.2829 91.1132 51.7718 90.6167 52.0175C91.174 52.2202 91.5996 52.8408 91.5996 53.5045ZM87.44 49.9479V51.5843H89.4033C90.0214 51.5843 90.3862 51.2829 90.3862 50.7712C90.3862 50.2594 90.0138 49.9479 89.4033 49.9479H87.44ZM90.5736 53.3728C90.5736 52.8155 90.1658 52.4786 89.4945 52.4786H87.4426V54.2822H89.4869C90.1582 54.2822 90.5762 53.9377 90.5762 53.3703L90.5736 53.3728Z"/><path d="M93.2617 52.6559V49.0283H94.2877V52.6382C94.2877 53.7097 94.9235 54.3912 95.9166 54.3912C96.9096 54.3912 97.5454 53.7097 97.5454 52.6382V49.0283H98.5714V52.6559C98.5714 54.3101 97.5454 55.3462 95.9166 55.3462C94.2877 55.3462 93.2617 54.3101 93.2617 52.6559Z"/><path d="M100.764 49.0283H101.8V55.2221H100.764V49.0283Z"/><path d="M104.072 49.0283H105.108V54.2569H108.374V55.2221H104.075V49.0283H104.072Z"/><path d="M115.538 52.1239C115.538 53.9808 114.281 55.2195 112.414 55.2195H110.043V49.0258H112.414C114.281 49.0258 115.538 50.2645 115.538 52.1214V52.1239ZM114.494 52.1239C114.494 50.8497 113.645 49.9833 112.414 49.9833H111.079V54.2645H112.414C113.653 54.2645 114.494 53.3981 114.494 52.1239Z"/></g></svg>
+    <p class="eyebrow">Claude Code guide · for Charlie</p>
+    <h1>Build The LAB's own Spark</h1>
+    <p class="lead">The LAB pays for Spark Membership to run members, billing, check-in and waivers. This guide takes you from an empty folder to an app The LAB owns, then to cancelling Spark without losing a record. You type the prompts into Claude Code. It builds, tests and ships.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#setup">Start here</a>
+      <a class="btn btn-secondary" href="#finish">What done looks like</a>
+    </div>
+    <div class="meter" aria-live="polite">
+      <div class="meter-row"><span>Your progress</span><span id="meter-text">0 of 8 steps</span></div>
+      <div class="meter-bar"><div class="meter-fill" id="meter-fill"></div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Sections">
+  <ul>
+    <li><a href="#finish">Finish line</a></li>
+    <li><a href="#why">Why</a></li>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#steps">8 steps</a></li>
+    <li><a href="#spark-map">Spark map</a></li>
+    <li><a href="#habits">Habits</a></li>
+    <li><a href="#help">Help</a></li>
+  </ul>
+</nav>
+
+<main class="wrap">
+
+<section id="finish">
+  <h2>The finish line</h2>
+  <p class="section-note">You're done when all five of these are true.</p>
+  <div class="card">
+    <ul class="list">
+      <li>The front desk sees who is active and who is past due when a kid checks in.</li>
+      <li>Members, families, classes, attendance, levels, waivers and billing records live in The LAB's own app.</li>
+      <li>Staff open it from a link on their phones and sign in.</li>
+      <li>Every Spark record is exported and stored before Spark is cancelled.</li>
+      <li>The non-renewal notice reaches Spark at least 30 days before the term ends.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="why">
+  <h2>Why own it</h2>
+  <p class="section-note">These numbers come from Spark's public terms and listings. Check them against your own contract and invoices.</p>
+  <div class="grid grid-2">
+    <div class="card"><div class="stat">$199/mo</div><p class="stat-note">Spark's listed price. Your invoice may differ.</p></div>
+    <div class="card"><div class="stat">0</div><p class="stat-note">Public APIs for reading your members out of Spark.</p></div>
+    <div class="card"><div class="stat">30 days</div><p class="stat-note">After the contract ends, Spark hands over data only if you ask within 30 days.</p></div>
+    <div class="card"><div class="stat">30 days</div><p class="stat-note">Notice Spark needs before the term ends, or the term auto-renews. Cancelling mid-term "for convenience" isn't permitted.</p></div>
+  </div>
+  <p class="src">Sources: <a href="https://sparkmembership.com/end-user-agreement/">Spark End User Agreement</a> · <a href="https://www.capterra.com/p/229881/Spark">Capterra listing</a></p>
+</section>
+
+<section id="setup">
+  <h2>Setup</h2>
+  <p class="section-note">About 30 minutes, once.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Install</h3>
+      <ul class="list">
+        <li><a href="https://code.claude.com/docs">Claude Code</a>, signed in. Use the VS Code extension if you'd rather not work in a terminal.</li>
+        <li><a href="https://nodejs.org">Node.js</a> 22 or newer.</li>
+        <li><a href="https://git-scm.com">Git</a> and a <a href="https://github.com">GitHub</a> account.</li>
+        <li><a href="https://code.visualstudio.com">VS Code</a>.</li>
+        <li>An empty folder named <code>lab-spark</code>, opened in VS Code with the Claude Code panel open.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Ground rules</h3>
+      <ul class="list dash">
+        <li>Never paste the Spark security key, passwords, card numbers or member details into a prompt.</li>
+        <li>Use clearly fake sample members until step 7 puts real data behind a sign-in.</li>
+        <li>Read each approval before you say yes. Take extra care with delete, push and send.</li>
+        <li>Pushing to <code>main</code> publishes the site. Do it on purpose.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="steps">
+  <h2>The 8 steps</h2>
+  <p class="section-note">Each step ends with something you can open, and a commit (a saved checkpoint). Tick it when it's true. The tick is saved in this browser.</p>
+
+  <article class="step" id="step-1">
+    <div class="step-head"><div class="step-num">1</div><div><h3>Write the brief</h3><p class="step-meta">45 min · no code yet</p></div></div>
+    <p>Claude interviews you and writes <code>SPARK-BRIEF.md</code>. Every later prompt points back to it. Before you start, list the Spark screens your staff open in a normal week.</p>
+    <p class="label">Type this</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>We're replacing Spark Membership, the member CRM and billing software The LAB pays for, with our own app. Interview me one question at a time and write SPARK-BRIEF.md: who uses it at the desk and on the floor, the first job it must do, which Spark features we use every week and which we never touch, our brand, what data we have, and where it will live. Leave a blank where I don't know.</pre></div>
+    <p class="label">Then</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/init</pre></div>
+    <p><code>/init</code> writes <code>CLAUDE.md</code>, which Claude reads at the start of every session.</p>
+    <label class="check"><input type="checkbox" data-step="1"> SPARK-BRIEF.md exists and reads right to me</label>
+  </article>
+
+  <article class="step" id="step-2">
+    <div class="step-head"><div class="step-num">2</div><div><h3>Build the first job</h3><p class="step-meta">1 hour</p></div></div>
+    <p>Build the one job the desk needs most, and open it the same day. From the owner calls, that job is: find the kid, see if they're active or past due, check them in.</p>
+    <p class="label">Type this</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Build the first job only: the front desk searches for a kid, sees whether the membership is active or past due, and checks them in to today's class. Use made-up sample members. Then pull it up in the browser for me.</pre></div>
+    <p class="label">Then</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Set up git for this project and commit it.</pre></div>
+    <label class="check"><input type="checkbox" data-step="2"> I checked in a sample kid in the browser, and it's committed</label>
+  </article>
+
+  <article class="step" id="step-3">
+    <div class="step-head"><div class="step-num">3</div><div><h3>Map Spark</h3><p class="step-meta">1 hour · Claude does the reading</p></div></div>
+    <p>A written checklist turns "make it like Spark" into work you can tick off. Claude sends helper agents to read Spark's public pages and help center, then merges what they find into one table.</p>
+    <p class="label">Type this</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Find screenshots, documentation and everything we'd need for parity with Spark Membership. Public sources only: sparkmembership.com, help.sparkmembership.com including the monthly release notes, and their YouTube tutorials. Write docs/spark-parity.md as a table: area, what Spark does, our plan, status. Keep screenshots in a gitignored folder. End with a short list of where we can beat Spark.</pre></div>
+    <p class="label">Then you decide</p>
+    <p>Mark each row <strong>must-have</strong>, <strong>later</strong> or <strong>skip</strong>. Skip what nobody uses. That decision is yours, not Claude's.</p>
+    <label class="check"><input type="checkbox" data-step="3"> docs/spark-parity.md is marked and committed</label>
+  </article>
+
+  <article class="step" id="step-4">
+    <div class="step-head"><div class="step-num">4</div><div><h3>Put it on The LAB brand</h3><p class="step-meta">1 hour</p></div></div>
+    <p>Tokens are named colors and sizes the whole app uses, such as "accent" instead of a hex code. Changing the brand later becomes one edit, and a lint (an automatic check) stops off-brand colors from getting in. The LAB app repo already has a brand kit and a design system, so point Claude at them.</p>
+    <p class="label">Type this</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Set up a design system from The LAB brand kit in &lt;path to lab-skill-unlocks&gt;/brandkit and the rules in &lt;path to lab-skill-unlocks&gt;/app/DESIGN-SYSTEM.md. Navy #0F0E54, cyan #22BCED for actions, mint #C2E6DB for secondary actions, ink #090D19 for text, Argentum Sans headings and Work Sans body. Two token layers (brand colors, then names the UI uses), a component library, a style-guide page, and a lint that fails if any UI color is off the tokens.</pre></div>
+    <label class="check"><input type="checkbox" data-step="4"> The style-guide page looks like The LAB and the lint passes</label>
+  </article>
+
+  <article class="step" id="step-5">
+    <div class="step-head"><div class="step-num">5</div><div><h3>The big build</h3><p class="step-meta">An afternoon · mostly waiting</p></div></div>
+    <p><code>/goal</code> sets a finish line that Claude keeps working toward across many steps. It reads the wording literally, so write what you'll accept. Ask for the plan first and read it before you say go.</p>
+    <p class="label">Type this</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/goal build out our Spark replacement with every must-have row in docs/spark-parity.md, make check-in and past-due alerts excellent, and the whole thing uses The LAB brand through the design system and tokens. Every page works at phone and desktop width with no console errors.</pre></div>
+    <p class="label">Before it codes</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Plan first, don't edit yet. Show me the shared foundation you'll write and how you'll split the work between helper agents, with the files each one owns.</pre></div>
+    <p>Read the plan, then say "go". You can send messages while it works. When it reports back, ask to see the result: "show me every page at phone size."</p>
+    <label class="check"><input type="checkbox" data-step="5"> Every page opens on my phone and desktop without errors, and it's committed</label>
+  </article>
+
+  <article class="step" id="step-6">
+    <div class="step-head"><div class="step-num">6</div><div><h3>Ship it with sample data</h3><p class="step-meta">1 hour</p></div></div>
+    <p>A shared link with realistic sample data is how Travis, Ally and the coaches try it. GitHub Pages is free, and on a free account the site is public. Use sample data only.</p>
+    <p class="label">Type these, one at a time</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Can we get this stood up on GitHub Pages so I can share it</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Load this with dummy data that looks like The LAB: our real class names, families with siblings, active, past-due, frozen and cancelled memberships, and attendance. Mark it clearly as sample, and make sure it shows up on the live site.</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>push to live once it's done and then test it in browser on live, not localhost</pre></div>
+    <label class="check"><input type="checkbox" data-step="6"> The live link works on my phone and shows sample data</label>
+  </article>
+
+  <article class="step" id="step-7">
+    <div class="step-head"><div class="step-num">7</div><div><h3>Connect real data</h3><p class="step-meta">A few sessions · needs accounts</p></div></div>
+    <p>Shared data across phones, real sign-ins, card payments and automatic texts all need a server. The LAB app (the <code>lab-skill-unlocks</code> repo) already has one, plus a Spark webhook that receives member status, past-due and join dates, check-in, and a consent log. Reuse it before building new.</p>
+    <p class="label">Type this</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>&lt;path to lab-skill-unlocks&gt; is our existing LAB app. It already has a Supabase backend, a Spark webhook, check-in and a consent log. Read it and tell me what we should reuse. Then plan how to move members, families, memberships and attendance onto it behind real sign-ins. Don't change that repo until I approve the plan.</pre></div>
+    <div class="callout warn"><strong>Billing is the hard part</strong><p>Recurring card and bank payments need a processor (Stripe or similar), a server and your accounts. Decide who bills before you build it: the new app, or another system. Ask Spark in writing whether stored cards can move to the new processor. If they can't, families re-enter cards.</p></div>
+    <label class="check"><input type="checkbox" data-step="7"> Real members load behind a sign-in, not on the public page</label>
+  </article>
+
+  <article class="step" id="step-8">
+    <div class="step-head"><div class="step-num">8</div><div><h3>Cut over and cancel Spark</h3><p class="step-meta">Plan 45+ days ahead of the term end</p></div></div>
+    <p>This step is a checklist, not a prompt. Do it in this order.</p>
+    <ul class="list dash">
+      <li>Find the term end date in the Spark contract. Put the non-renewal deadline, 30 days before it, on the calendar.</li>
+      <li>While the account is still paid, export: All Contacts with every column, Past Due Memberships, each waiver and form's submissions (CSV), signed membership agreements, and attendance and rank history.</li>
+      <li>Ask Spark's data team in writing for a full archive. Don't count on the 30-day window after the contract ends.</li>
+      <li>Waivers: get an Arizona attorney to review the app's waiver text, and the insurance carrier's sign-off, before it replaces Spark's form.</li>
+      <li>Run both systems side by side for two weeks. Check that the active and past-due counts match each day.</li>
+      <li>Move billing, then send the non-renewal notice in writing.</li>
+    </ul>
+    <div class="callout info"><strong>Ask Claude to check the exports</strong><p>Put the export files in a gitignored folder and ask: "Compare these Spark exports with the app's data and list every member, family or waiver that's missing." Real member data never goes in the public repo.</p></div>
+    <label class="check"><input type="checkbox" data-step="8"> Everything is exported and checked, and the notice is sent</label>
+  </article>
+</section>
+
+<section id="spark-map">
+  <h2>What Spark does, and what each part needs</h2>
+  <p class="section-note">A starting map from public listings and Spark's help center. Step 3 replaces it with the full checklist.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Area</th><th>What Spark does</th><th>What it needs</th></tr></thead>
+      <tbody>
+        <tr><td>Members and families</td><td>Contacts, parents linked to kids, emergency contacts</td><td><span class="tag good">Browser first</span></td></tr>
+        <tr><td>Check-in and attendance</td><td>Check-in manager, attendance counts</td><td><span class="tag good">LAB app has it</span></td></tr>
+        <tr><td>Classes and schedule</td><td>Class schedule and enrollment</td><td><span class="tag good">Browser first</span></td></tr>
+        <tr><td>Ranks and levels</td><td>Rank tracking and history, attendance needed per rank</td><td><span class="tag good">LAB app has levels</span></td></tr>
+        <tr><td>Reports</td><td>All Contacts, Past Due Memberships, Excel/CSV export</td><td><span class="tag good">Browser first</span></td></tr>
+        <tr><td>Member app</td><td>iOS and Android apps, member portal</td><td><span class="tag good">Phone web app</span></td></tr>
+        <tr><td>Memberships and billing</td><td>Recurring dues, card and ACH, invoices, past-due reminders</td><td><span class="tag warn">Server + processor</span></td></tr>
+        <tr><td>Leads and follow-up</td><td>Prospects, email and text follow-up, reminders</td><td><span class="tag warn">Server + texting</span></td></tr>
+        <tr><td>Waivers and forms</td><td>Online forms, signed agreements</td><td><span class="tag warn">Server + attorney</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="src">Sources: <a href="https://sourceforge.net/software/product/Spark-Membership">SourceForge</a> · <a href="https://www.getapp.co.uk/software/2048315/spark-membership">GetApp</a> · <a href="https://help.sparkmembership.com">Spark help center</a></p>
+</section>
+
+<section id="habits">
+  <h2>Habits that make it work</h2>
+  <p class="section-note">The Axis app was built in about two days with ten prompts. These habits did most of the work.</p>
+  <div class="grid grid-2">
+    <div class="card"><h3>Say the outcome</h3><p>"So the desk knows who's past due before class" beats a list of buttons. Describe the job from the user's side.</p></div>
+    <div class="card"><h3>Give it the material</h3><p>Paste folder paths, links and file names. Claude reads them directly.</p></div>
+    <div class="card"><h3>Push back</h3><p>"This feels basic. What do the best gyms use?" is the prompt that turned Axis from a toy into a product.</p></div>
+    <div class="card"><h3>Say how you'll judge it</h3><p>"Test it on live, not localhost" and "show me at phone size" catch bugs a summary hides.</p></div>
+    <div class="card"><h3>State the standard</h3><p>"Free, open source, just works" changed how Axis was designed. One sentence about what you value goes a long way.</p></div>
+    <div class="card"><h3>Commit at every working step</h3><p>Say "commit this" whenever something works. A commit is a checkpoint you can go back to.</p></div>
+  </div>
+</section>
+
+<section id="help">
+  <h2>When it goes wrong</h2>
+  <p class="section-note">Problems the Axis build ran into, and the fix for each.</p>
+  <details><summary>The live site is blank, but local works</summary><div><p>Usually the base path. Say: "The live site is blank. Check the base path and the 404 fallback for GitHub Pages, fix it, push, and test on live."</p></div></details>
+  <details><summary>"node is not recognized" on Windows</summary><div><p>Node isn't on the PATH. Reinstall Node from nodejs.org and restart VS Code, or tell Claude the error and let it fix the PATH for the session.</p></div></details>
+  <details><summary>Buttons lost their colors</summary><div><p>A long-running dev server can serve old styles. Say: "restart the dev server."</p></div></details>
+  <details><summary>Claude says it's done and I'm not sure</summary><div><p>Ask to see it: "Open every page at phone and desktop width, take screenshots, and show me any console errors." Read the screenshots yourself.</p></div></details>
+  <details><summary>It keeps listing things it can't finish</summary><div><p>Those rows need a server, accounts or your decision: payments, automatic texts, real sign-ins. Mark them "later" in the parity checklist, or do step 7.</p></div></details>
+  <details><summary>The conversation got long and confused</summary><div><p>Commit, then run <code>/clear</code> to start fresh. Claude rereads <code>CLAUDE.md</code> and the brief.</p></div></details>
+  <details><summary>Commands worth knowing</summary><div><p><code>/help</code> lists commands. <code>/init</code> writes CLAUDE.md. <code>/goal</code> sets a finish line. <code>/clear</code> starts fresh. <code>/code-review</code> checks your changes for bugs before a big push.</p></div></details>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>The LAB · Learn. Adapt. Build. · Glendale, AZ</p>
+    <p>Course pack: <a href="https://github.com/Willwwest/claude-code-class">claude-code-class</a> · <a href="https://code.claude.com/docs">Claude Code docs</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var KEY = "lab-spark-steps";
+  var boxes = document.querySelectorAll("input[data-step]");
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+
+  function render() {
+    var done = 0;
+    boxes.forEach(function (b) {
+      b.closest(".step").classList.toggle("done", b.checked);
+      if (b.checked) done++;
+    });
+    document.getElementById("meter-text").textContent = done + " of " + boxes.length + " steps";
+    document.getElementById("meter-fill").style.width = (done / boxes.length * 100) + "%";
+  }
+
+  boxes.forEach(function (b) {
+    b.checked = !!saved[b.dataset.step];
+    b.addEventListener("change", function () {
+      saved[b.dataset.step] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+      render();
+    });
+  });
+  render();
+
+  document.querySelectorAll(".copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var text = btn.closest(".prompt").querySelector("pre").textContent;
+      var ok = function () {
+        btn.textContent = "Copied";
+        btn.classList.add("ok");
+        setTimeout(function () { btn.textContent = "Copy"; btn.classList.remove("ok"); }, 1600);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(ok);
+      } else {
+        var t = document.createElement("textarea");
+        t.value = text;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand("copy");
+        t.remove();
+        ok();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
