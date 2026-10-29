@@ -71,6 +71,8 @@ Claude Code keeps per-project memory and reads `CLAUDE.md`. Tell it durable pref
 - `/clear` starts a fresh context.
 - `/config`
 - `/code-review` reviews the current changes for bugs.
+- `/security-review` reviews the current changes for security holes.
+- `/plugin` adds skills from a marketplace. For security: `/plugin marketplace add trailofbits/skills`, then `/plugin install insecure-defaults@trailofbits`.
 - `/artifacts` lists pages Claude has published for you.
 
 Long sessions get summarized automatically, and work continues.

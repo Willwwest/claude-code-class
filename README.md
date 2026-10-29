@@ -4,7 +4,7 @@ This is the context a teaching agent needs to run a hands-on Claude Code class. 
 
 ## Charlie's guide site
 
-`site/` is a one-page guide for Charlie: setup, parent and child accounts (the core of the app), nine steps (including building the brand kit from the website) with copyable prompts, tooltips that explain every technical word, a map of what Spark does, and the cut-over checklist. It's plain HTML with no build step, on The LAB brand. `.github/workflows/pages.yml` publishes it to GitHub Pages on every push to `main` that touches `site/`. Live at https://willwwest.github.io/claude-code-class/ once Pages is turned on.
+`site/` is a one-page guide for Charlie: setup, parent and child accounts (the core of the app), ten steps (including a private GitHub repo, a brand kit built from the website, and a security lockdown with red-team prompts) with copyable prompts, tooltips that explain every technical word, a map of what Spark does, and the cut-over checklist. It's plain HTML with no build step, on The LAB brand. `.github/workflows/pages.yml` publishes it to GitHub Pages on every push to `main` that touches `site/`. Live at https://willwwest.github.io/claude-code-class/.
 
 ## How to start the class
 

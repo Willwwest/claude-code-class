@@ -158,7 +158,7 @@ footer a{color:var(--white)}
       <a class="btn btn-secondary" href="#finish">What done looks like</a>
     </div>
     <div class="meter" aria-live="polite">
-      <div class="meter-row"><span>Your progress</span><span id="meter-text">0 of 9 steps</span></div>
+      <div class="meter-row"><span>Your progress</span><span id="meter-text">0 of 10 steps</span></div>
       <div class="meter-bar"><div class="meter-fill" id="meter-fill"></div></div>
     </div>
   </div>
@@ -170,7 +170,7 @@ footer a{color:var(--white)}
     <li><a href="#why">Why</a></li>
     <li><a href="#setup">Setup</a></li>
     <li><a href="#accounts">Parents and kids</a></li>
-    <li><a href="#steps">9 steps</a></li>
+    <li><a href="#steps">10 steps</a></li>
     <li><a href="#spark-map">Spark map</a></li>
     <li><a href="#habits">Habits</a></li>
     <li><a href="#help">Help</a></li>
@@ -215,7 +215,8 @@ footer a{color:var(--white)}
       <ul class="list">
         <li><a href="https://code.claude.com/docs">Claude Code</a>, signed in. Use the VS Code extension if you'd rather not work in a terminal.</li>
         <li><a href="https://nodejs.org">Node.js</a> 22 or newer.</li>
-        <li><a href="https://git-scm.com">Git</a> and a <a href="https://github.com">GitHub</a> account.</li>
+        <li><a href="https://git-scm.com">Git</a> and a <a href="https://github.com">GitHub</a> account with two-factor sign-in turned on.</li>
+        <li>The <a href="https://cli.github.com">GitHub CLI</a>. Sign it in yourself: type <code>gh auth login</code> in the VS Code terminal and follow the steps. Claude never needs your GitHub password.</li>
         <li><a href="https://code.visualstudio.com">VS Code</a>.</li>
         <li>The <a href="https://claude.com/chrome">Claude in Chrome</a> extension, so Claude can open websites and test the app in a real browser.</li>
         <li>An empty folder named <code>lab-spark</code>, opened in VS Code with the Claude Code panel open.</li>
@@ -225,9 +226,9 @@ footer a{color:var(--white)}
       <h3>Ground rules</h3>
       <ul class="list dash">
         <li>Never paste the Spark security key, passwords, card numbers or member details into a prompt.</li>
-        <li>Use made-up sample members until step 8 puts real data behind a sign-in.</li>
+        <li>Use made-up sample members until the step 9 security checks pass.</li>
         <li>Read each approval before you say yes. Take extra care with delete, push and send.</li>
-        <li>Pushing to <code>main</code> publishes the site. Do it on purpose.</li>
+        <li>Keep the repo private. Pushing to <code>main</code> can publish the site, so push on purpose.</li>
       </ul>
     </div>
   </div>
@@ -263,7 +264,7 @@ footer a{color:var(--white)}
 </section>
 
 <section id="steps">
-  <h2>The 9 steps</h2>
+  <h2>The 10 steps</h2>
   <p class="section-note">Hover or tap any underlined word for a plain explanation. Each step ends with something you can open, and a commit. Tick it when it's true. The tick is saved in this browser.</p>
 
   <article class="step" id="step-1">
@@ -283,8 +284,10 @@ footer a{color:var(--white)}
     <p class="label">Type this</p>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Build the first job only, on parent and child accounts: each parent account has its kids under it. The front desk searches for a kid or a parent, sees the whole family with each kid's membership status (active or past due), and checks in one kid or all the siblings to today's class. Use made-up sample families. Then pull it up in the browser for me.</pre></div>
     <p class="label">Then</p>
-    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Set up git for this project and commit it.</pre></div>
-    <label class="check"><input type="checkbox" data-step="2"> I found a sample parent, saw their kids and checked in two siblings, and it's committed</label>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Set up git for this project. Add a .gitignore that keeps out .env files, node_modules, an exports/ folder for Spark exports and a private/ folder for screenshots. Commit it, then use the GitHub CLI to create a private repo called lab-spark and push to it. Show me the repo link.</pre></div>
+    <p class="label">Check it</p>
+    <p>Open the link. The repo name should have a <strong>Private</strong> label next to it. To add Travis or Ally, go to Settings, then Collaborators, and invite them by GitHub username. Only people you invite can see the code.</p>
+    <label class="check"><input type="checkbox" data-step="2"> I found a sample parent, saw their kids and checked in two siblings, and it's in a private GitHub repo</label>
   </article>
 
   <article class="step" id="step-3">
@@ -332,9 +335,9 @@ footer a{color:var(--white)}
 
   <article class="step" id="step-7">
     <div class="step-head"><div class="step-num">7</div><div><h3>Ship it with sample data</h3><p class="step-meta">1 hour</p></div></div>
-    <p>A shared link with realistic sample data is how Travis, Ally and the coaches try it. GitHub Pages is free, and on a free account the site is public. Use sample data only.</p>
+    <p>A shared link with realistic sample data is how Travis, Ally and the coaches try it. The code stays private, but anyone with the link can open the site, so use sample data only. GitHub Pages can't publish from a private repo on a free GitHub plan. Cloudflare Pages can, for free, and the LAB app already uses Cloudflare.</p>
     <p class="label">Type these, one at a time</p>
-    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Can we get this stood up on GitHub Pages so I can share it</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Can we get this stood up so I can share it? The repo stays private. Use Cloudflare Pages unless you find a better free option, and tell me what account or setting you need from me.</pre></div>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Load this with dummy data that looks like The LAB: our real class names, parent accounts with one to three kids each, some with a second parent, active, past-due, frozen and cancelled memberships, and attendance. Label it as sample, and make sure it shows up on the live site.</pre></div>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>push to live once it's done and then test it in browser on live, not localhost</pre></div>
     <label class="check"><input type="checkbox" data-step="7"> The live link works on my phone and shows sample data</label>
@@ -344,13 +347,45 @@ footer a{color:var(--white)}
     <div class="step-head"><div class="step-num">8</div><div><h3>Connect real data</h3><p class="step-meta">A few sessions · needs accounts</p></div></div>
     <p>Shared data across phones, real sign-ins, card payments and automatic texts all need a server. The LAB app (the <code>lab-skill-unlocks</code> repo) has one, plus a Spark webhook that receives member status, past-due and join dates, check-in, and a consent log. Reuse it before building new.</p>
     <p class="label">Type this</p>
-    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>&lt;path to lab-skill-unlocks&gt; is our existing LAB app. It has a Supabase backend with families, guardians and athletes, a Spark webhook, check-in and a consent log. Read it and tell me what we should reuse. Then plan how to move parent accounts, their kids, memberships and attendance onto it behind real sign-ins, where a parent sees only their own kids. Don't change that repo until I approve the plan.</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>&lt;path to lab-skill-unlocks&gt; is our existing LAB app. It has a Supabase backend with families, guardians and athletes, a Spark webhook, check-in and a consent log. Read it and tell me what we should reuse. Then plan how to move parent accounts, their kids, memberships and attendance onto it behind real sign-ins, where a parent sees only their own kids. Use sample families until the security checks pass. Don't change that repo until I approve the plan.</pre></div>
     <div class="callout warn"><strong>Billing needs the most setup</strong><p>Recurring card and bank payments need a processor (Stripe or similar), a server and your accounts. Decide who bills before you build it: the new app, or another system. Ask Spark in writing whether stored cards can move to the new processor. If they can't, families re-enter cards.</p></div>
-    <label class="check"><input type="checkbox" data-step="8"> A parent signs in and sees only their own kids, and none of it is on the public page</label>
+    <label class="check"><input type="checkbox" data-step="8"> A sample parent signs in and sees only their own kids</label>
   </article>
 
   <article class="step" id="step-9">
-    <div class="step-head"><div class="step-num">9</div><div><h3>Cut over and cancel Spark</h3><p class="step-meta">Plan 45+ days ahead of the term end</p></div></div>
+    <div class="step-head"><div class="step-num">9</div><div><h3>Lock it down</h3><p class="step-meta">2 hours · before any real member data goes in</p></div></div>
+    <p>The app will hold kids' names, parents' phone numbers and billing. Before a real family goes in, have Claude attack the app the way a stranger would, then fix what it finds. Only test the app you own, on your own test site, with sample data.</p>
+    <p class="label">1 · Built-in review</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/security-review</pre></div>
+    <p>Run it before every push from here on.</p>
+    <p class="label">2 · Add security skills</p>
+    <p>Trail of Bits, a security firm, publishes free skills for Claude Code. Type these one at a time:</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/plugin marketplace add trailofbits/skills</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/plugin install insecure-defaults@trailofbits</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/plugin install supply-chain-risk-auditor@trailofbits</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/insecure-defaults:audit</pre></div>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Audit this project's dependencies for supply-chain risk.</pre></div>
+    <p>The audit finds settings that leave a door open, such as a debug mode left on or a sign-in check that lets people through when it fails. The dependency check looks at every package the app uses for known security holes and abandoned code.</p>
+    <p class="label">3 · Red-team it</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Red-team our app on the test site with sample data. Try to:
+- sign in as one parent and read or change another family's kids, bills or waiver;
+- open any family or kid data while signed out;
+- check in a kid, or change a membership status, without a staff sign-in;
+- find keys, passwords or member data in the code, the git history or the live site's files;
+- read or write any Supabase table that Row Level Security doesn't cover.
+For each hole, show me how you got in. Then fix it and run the same attack again to prove it's closed.</pre></div>
+    <p class="label">4 · You do these</p>
+    <ul class="list dash">
+      <li>Turn on two-factor sign-in for GitHub, Supabase, Cloudflare, your payment processor and Spark.</li>
+      <li>On GitHub, open the repo's Settings, then Advanced Security, and turn on Dependabot alerts.</li>
+      <li>In Supabase, open the Security Advisor and clear every warning.</li>
+      <li>Change any key or password that was ever sent in a text, email or photo.</li>
+    </ul>
+    <label class="check"><input type="checkbox" data-step="9"> Every attack fails, the reviews come back clean, and two-factor is on everywhere</label>
+  </article>
+
+  <article class="step" id="step-10">
+    <div class="step-head"><div class="step-num">10</div><div><h3>Cut over and cancel Spark</h3><p class="step-meta">Plan 45+ days ahead of the term end</p></div></div>
     <p>This step is a checklist. Work through it in order.</p>
     <ul class="list dash">
       <li>Find the term end date in the Spark contract. Put the non-renewal deadline, 30 days before it, on the calendar.</li>
@@ -361,7 +396,7 @@ footer a{color:var(--white)}
       <li>Move billing, then send the non-renewal notice in writing.</li>
     </ul>
     <div class="callout info"><strong>Ask Claude to check the exports</strong><p>Put the export files in a gitignored folder and ask: "Compare these Spark exports with the app's data and list every parent, kid or waiver that's missing, and every kid not linked to a parent." Keep real member data out of the public repo.</p></div>
-    <label class="check"><input type="checkbox" data-step="9"> Everything is exported and checked, and the notice is sent</label>
+    <label class="check"><input type="checkbox" data-step="10"> Everything is exported and checked, and the notice is sent</label>
   </article>
 </section>
 
@@ -396,6 +431,7 @@ footer a{color:var(--white)}
     <div class="card"><h3>Push back</h3><p>"This feels basic. What do the best gyms use?" led to the research that put Axis level with Tint Wiz.</p></div>
     <div class="card"><h3>Say how you'll judge it</h3><p>"Test it on live, not localhost" and "show me at phone size" catch bugs a summary hides.</p></div>
     <div class="card"><h3>State the standard</h3><p>"Free, open source, just works" changed how Claude designed Axis's route planning. Say what you value in one sentence.</p></div>
+    <div class="card"><h3>Review before you push</h3><p>Run <code>/security-review</code> before each push once real families are in the app. It reads only what changed.</p></div>
     <div class="card"><h3>Commit at every working step</h3><p>Say "commit this" whenever something works. A commit is a checkpoint you can go back to.</p></div>
   </div>
 </section>
@@ -524,6 +560,20 @@ footer a{color:var(--white)}
     processor: ["Payment processor", "A company such as Stripe that charges cards and bank accounts and sends the money to The LAB.", "processor"],
     ach: ["ACH", "Bank-to-bank payments, such as autopay from a checking account.", "ACH", true],
     crm: ["CRM", "Customer relationship management: the system that holds every member and lead, and your history with each one.", "CRM", true],
+    private: ["Private repo", "Only you and the people you invite can see the code. Anyone on the internet can read a public repo.", "private repo"],
+    ghcli: ["GitHub CLI", "A small program that lets Claude create repos and push to GitHub for you, once you've signed it in.", "GitHub CLI"],
+    twofa: ["Two-factor sign-in", "A second check on top of your password, such as a code from your phone. A stolen password alone can't get in.", "two-factor(?: sign-in)?"],
+    redteam: ["Red team", "Attacking your own app on purpose, the way a stranger would, to find the holes before anyone else does.", "red-team(?:ing)?"],
+    rls: ["Row Level Security", "Database rules that decide which records each signed-in person can read or change. They stop one parent from seeing another family's kids.", "Row Level Security"],
+    dependabot: ["Dependabot", "A free GitHub alert that tells you when a package your app uses has a known security hole.", "Dependabot(?: alerts)?"],
+    plugin: ["Plugin", "An add-on for Claude Code that gives it new skills and commands. You add one with /plugin.", "plugins?"],
+    skills: ["Skills", "Written instructions that teach Claude a specific job, such as a security audit, so it follows an expert's method.", "skills"],
+    secreview: ["/security-review", "A built-in Claude Code command that checks your latest changes for security holes.", "/security-review"],
+    env: [".env file", "A settings file for passwords and keys that stays on your computer. The .gitignore file keeps it off GitHub.", "\\.env(?: files?)?"],
+    gitignore: [".gitignore", "A list of files and folders Git never saves or uploads, such as passwords and member exports.", "\\.gitignore"],
+    collaborators: ["Collaborators", "People you invite to a private repo. Only they can see or change the code.", "Collaborators"],
+    cloudflare: ["Cloudflare Pages", "Free website hosting that can publish from a private GitHub repo.", "Cloudflare Pages"],
+    supply: ["Supply chain", "All the outside packages your app is built from. A hole in one of them is a hole in your app.", "supply-chain"],
     signin: ["Sign-in", "Proving who you are, such as a code texted to your phone, before the app shows private data.", "sign-ins?"]
   };
 

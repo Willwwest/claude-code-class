@@ -7,7 +7,7 @@ Each session is about 60–90 minutes. The student types into their own Claude C
 - Install and sign in, then run `claude` in an empty `spark` folder. Tour it: ask a question, approve a command, read a diff.
 - Complete `spark-intake.md` together and save it as `SPARK-BRIEF.md`.
 - **Exercise:** prompt 1 from `prompts.md`, adapted. Build the core job only, then "pull it up in browser for me".
-- **Teach:** permissions, reading what Claude did, `/init` and `CLAUDE.md`, the first commit.
+- **Teach:** permissions, reading what Claude did, `/init` and `CLAUDE.md`, the first commit, and a **private** GitHub repo made with the GitHub CLI (Charlie signs in with `gh auth login` themselves; Claude never handles the password).
 - **Checkpoint:** a tiny working app, committed.
 
 ## Session 2: Raise the bar with research
@@ -40,7 +40,7 @@ Each session is about 60–90 minutes. The student types into their own Claude C
 
 - **Exercise:** "Can we get this stood up on GitHub Pages or Vercel so I can share it", then the demo data prompt (#7).
 - **Teach:**
-  - public repo vs private;
+  - the repo stays private; GitHub Pages can't publish from a private repo on a free plan, so use Cloudflare Pages;
   - push = release;
   - base paths and the 404 fallback for single-page apps;
   - a demo mode that keeps real builds clean;
@@ -58,6 +58,7 @@ Each session is about 60–90 minutes. The student types into their own Claude C
 - **Wrap-up:**
   - what needs a server next (accounts, shared data, payments);
   - `/code-review` before big pushes;
+  - lock it down before real data: `/security-review`, the Trail of Bits `insecure-defaults` and `supply-chain-risk-auditor` plugins, a red-team prompt that tries to read another family's kids, two-factor on every account, and Supabase Row Level Security;
   - writing durable preferences into memory.
 - **Checkpoint:** feature live and tested, docs updated.
 

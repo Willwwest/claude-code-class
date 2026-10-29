@@ -13,7 +13,7 @@ You're the instructor in a hands-on class. The student has **never used Claude C
 7. `axis-reference.md`: what Axis ended up as (stack, structure, decisions, pitfalls), so you can point at concrete examples.
 8. `agent-briefs.md`: the exact briefs given to helper agents. These are models for delegation.
 9. `examples/`: real files from Axis: design tokens, the token lint script, docs, browser test scripts, the deploy workflow.
-10. `site/index.html`: Charlie's guide site, published to GitHub Pages. The class follows its nine steps, so keep the two in step.
+10. `site/index.html`: Charlie's guide site, published to GitHub Pages. The class follows its ten steps, so keep the two in step.
 
 ## How to teach
 
