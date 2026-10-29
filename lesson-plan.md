@@ -19,7 +19,7 @@ Each session is about 60–90 minutes. The student types into their own Claude C
 
 ## Session 3: The brand and design system
 
-- Gather the brand kit (logo, colors, fonts, or the website URL).
+- Gather the brand kit (logo, colors, fonts). If there is none, Claude builds it from the website: it reads colors and fonts from the page styles, downloads the logo files (SVG first) and cuts out their backgrounds into transparent navy, white and black versions. Check each logo on light and dark backgrounds.
 - **Exercise:** "Set up a design system for Spark: brand tokens in two layers (brand primitives → semantic names), a component library, a style-guide page, and a lint that fails if any UI color is off the tokens." Compare with `examples/tokens.css` and `examples/tokenize.cjs`.
 - **Teach:** what tokens are and why semantic names matter (theme changes become one edit); dark/light themes.
 - **Checkpoint:** the style-guide page renders on brand, and the lint passes.

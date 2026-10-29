@@ -121,10 +121,21 @@ summary{cursor:pointer;padding:14px 18px;font-weight:600;min-height:var(--target
 details>div{padding:0 18px 16px;color:var(--text-2)}
 details>div p:last-child{margin:0}
 
+/* Glossary tooltips */
+.term{text-decoration:underline dotted var(--cyan) 2px;text-underline-offset:4px;cursor:help;border-radius:4px}
+.term:hover,.term[aria-expanded="true"]{background:var(--sky-pale);color:var(--navy)}
+.hero .term:hover,.hero .term[aria-expanded="true"]{background:rgba(255,255,255,.14);color:var(--white)}
+.tip{position:fixed;z-index:20;left:0;top:0;width:max-content;max-width:min(300px,calc(100vw - 32px));padding:12px 14px 13px;border-radius:14px;background:var(--navy);color:var(--white);font:400 .92rem/1.45 var(--body);box-shadow:0 0 0 1px rgba(34,188,237,.4),0 12px 32px rgba(9,13,25,.28);opacity:0;visibility:hidden;transform:translateY(4px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none}
+.tip.show{opacity:1;visibility:visible;transform:none}
+.tip b{display:block;font:800 .95rem/1.2 var(--head);color:var(--cyan);margin-bottom:4px}
+.tip::before{content:"";position:absolute;left:var(--ax,50%);width:12px;height:12px;margin-left:-6px;background:var(--navy);transform:rotate(45deg);border-radius:2px}
+.tip.below::before{top:-5px}
+.tip.above::before{bottom:-5px}
+
 footer{margin-top:64px;background:var(--navy);color:var(--on-ink-2);padding:32px 0;font-size:.9rem}
 footer a{color:var(--white)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-@media print{.nav,.copy,.hero .actions{display:none}.hero{background:var(--navy)}}
+@media print{.nav,.copy,.hero .actions,.tip{display:none}.hero{background:var(--navy)}}
 </style>
 </head>
 <body>
@@ -140,7 +151,7 @@ footer a{color:var(--white)}
       <a class="btn btn-secondary" href="#finish">What done looks like</a>
     </div>
     <div class="meter" aria-live="polite">
-      <div class="meter-row"><span>Your progress</span><span id="meter-text">0 of 8 steps</span></div>
+      <div class="meter-row"><span>Your progress</span><span id="meter-text">0 of 9 steps</span></div>
       <div class="meter-bar"><div class="meter-fill" id="meter-fill"></div></div>
     </div>
   </div>
@@ -152,7 +163,7 @@ footer a{color:var(--white)}
     <li><a href="#why">Why</a></li>
     <li><a href="#setup">Setup</a></li>
     <li><a href="#accounts">Parents and kids</a></li>
-    <li><a href="#steps">8 steps</a></li>
+    <li><a href="#steps">9 steps</a></li>
     <li><a href="#spark-map">Spark map</a></li>
     <li><a href="#habits">Habits</a></li>
     <li><a href="#help">Help</a></li>
@@ -199,6 +210,7 @@ footer a{color:var(--white)}
         <li><a href="https://nodejs.org">Node.js</a> 22 or newer.</li>
         <li><a href="https://git-scm.com">Git</a> and a <a href="https://github.com">GitHub</a> account.</li>
         <li><a href="https://code.visualstudio.com">VS Code</a>.</li>
+        <li>The <a href="https://claude.com/chrome">Claude in Chrome</a> extension, so Claude can open websites and test the app in a real browser.</li>
         <li>An empty folder named <code>lab-spark</code>, opened in VS Code with the Claude Code panel open.</li>
       </ul>
     </div>
@@ -206,7 +218,7 @@ footer a{color:var(--white)}
       <h3>Ground rules</h3>
       <ul class="list dash">
         <li>Never paste the Spark security key, passwords, card numbers or member details into a prompt.</li>
-        <li>Use clearly fake sample members until step 7 puts real data behind a sign-in.</li>
+        <li>Use clearly fake sample members until step 8 puts real data behind a sign-in.</li>
         <li>Read each approval before you say yes. Take extra care with delete, push and send.</li>
         <li>Pushing to <code>main</code> publishes the site. Do it on purpose.</li>
       </ul>
@@ -238,14 +250,14 @@ footer a{color:var(--white)}
         <li>Who can pick up a kid, and is that stored on the family?</li>
         <li>When a kid turns 18 or a parent account closes, what happens to the kid's record?</li>
       </ul>
-      <div class="callout info"><strong>Already in the LAB app</strong><p>The <code>lab-skill-unlocks</code> database already stores families, guardians (more than one per family, one marked primary) and athletes under each family. Step 7 builds on it.</p></div>
+      <div class="callout info"><strong>Already in the LAB app</strong><p>The <code>lab-skill-unlocks</code> database already stores families, guardians (more than one per family, one marked primary) and athletes under each family. Step 8 builds on it.</p></div>
     </div>
   </div>
 </section>
 
 <section id="steps">
-  <h2>The 8 steps</h2>
-  <p class="section-note">Each step ends with something you can open, and a commit (a saved checkpoint). Tick it when it's true. The tick is saved in this browser.</p>
+  <h2>The 9 steps</h2>
+  <p class="section-note">Hover or tap any underlined word for a plain explanation. Each step ends with something you can open, and a commit. Tick it when it's true. The tick is saved in this browser.</p>
 
   <article class="step" id="step-1">
     <div class="step-head"><div class="step-num">1</div><div><h3>Write the brief</h3><p class="step-meta">45 min · no code yet</p></div></div>
@@ -279,45 +291,59 @@ footer a{color:var(--white)}
   </article>
 
   <article class="step" id="step-4">
-    <div class="step-head"><div class="step-num">4</div><div><h3>Put it on The LAB brand</h3><p class="step-meta">1 hour</p></div></div>
-    <p>Tokens are named colors and sizes the whole app uses, such as "accent" instead of a hex code. Changing the brand later becomes one edit, and a lint (an automatic check) stops off-brand colors from getting in. The LAB app repo already has a brand kit and a design system, so point Claude at them.</p>
-    <p class="label">Type this</p>
-    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Set up a design system from The LAB brand kit in &lt;path to lab-skill-unlocks&gt;/brandkit and the rules in &lt;path to lab-skill-unlocks&gt;/app/DESIGN-SYSTEM.md. Navy #0F0E54, cyan #22BCED for actions, mint #C2E6DB for secondary actions, ink #090D19 for text, Argentum Sans headings and Work Sans body. Two token layers (brand colors, then names the UI uses), a component library, a style-guide page, and a lint that fails if any UI color is off the tokens.</pre></div>
-    <label class="check"><input type="checkbox" data-step="4"> The style-guide page looks like The LAB and the lint passes</label>
+    <div class="step-head"><div class="step-num">4</div><div><h3>Get the brand kit</h3><p class="step-meta">1 hour · Claude reads the website</p></div></div>
+    <p>A brand kit is the logo files, colors and fonts in one folder. If you don't have one, Claude builds it from thelab.life. It reads the exact colors and fonts from the page's code, downloads the logo files the site uses, and cleans them up so they work on any background.</p>
+    <p class="label">1 · Pull the brand from the website</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Build a brand kit for The LAB from thelab.life. Open it in the browser and read the real colors (hex) and fonts from the page styles, not by eye. Download every logo file the site uses, SVG first and PNG if there's no SVG, into brandkit/source, with a list of the URL each one came from. Write brandkit/README.md: each color and what the site uses it for, fonts and weights, the logo files, and the font licenses.</pre></div>
+    <p class="label">2 · Cut out the logo backgrounds</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Make the logos usable anywhere. For each logo: if it's an SVG, remove any background shape so only the logo itself is left. If it's a PNG or JPG with a background, cut the background out to transparent, and trace it to an SVG if the shapes are simple. Don't redraw or change the logo. Save navy, white and black versions to brandkit/logos as SVG and as transparent PNG at 2400px wide. Check that each PNG's background is truly transparent.</pre></div>
+    <p class="label">3 · Look at it</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Make brandkit/index.html showing every logo on a white, a navy and a photo background, plus the colors and fonts. Pull it up in the browser for me.</pre></div>
+    <div class="callout info"><strong>Check the logos yourself</strong><p>Look for a white or gray box around a logo, rough edges, or a missing tagline. File names can be wrong: on thelab.life, the file named "Black" contains the white logo. An SVG from the site is better than cutting a logo out of a picture, because it stays sharp at any size.</p></div>
+    <p class="src">A kit made this way already exists in the <code>lab-skill-unlocks</code> repo, in <code>brandkit/</code>. You can copy that folder and use prompt 3 to check it.</p>
+    <label class="check"><input type="checkbox" data-step="4"> Every logo looks clean on light and dark, and the kit is committed</label>
   </article>
 
   <article class="step" id="step-5">
-    <div class="step-head"><div class="step-num">5</div><div><h3>The big build</h3><p class="step-meta">An afternoon · mostly waiting</p></div></div>
+    <div class="step-head"><div class="step-num">5</div><div><h3>Put it on The LAB brand</h3><p class="step-meta">1 hour</p></div></div>
+    <p>Tokens are named colors and sizes the whole app uses, such as "accent" instead of a hex code. Changing the brand later becomes one edit, and a lint stops off-brand colors from getting in. The LAB app repo already has a design system, so point Claude at its rules.</p>
+    <p class="label">Type this</p>
+    <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Set up a design system from our brand kit in brandkit/ and the rules in &lt;path to lab-skill-unlocks&gt;/app/DESIGN-SYSTEM.md. Navy #0F0E54, cyan #22BCED for actions, mint #C2E6DB for secondary actions, ink #090D19 for text, Argentum Sans headings and Work Sans body. Use the logos from brandkit/logos. Two token layers (brand colors, then names the UI uses), a component library, a style-guide page, and a lint that fails if any UI color is off the tokens.</pre></div>
+    <label class="check"><input type="checkbox" data-step="5"> The style-guide page looks like The LAB and the lint passes</label>
+  </article>
+
+  <article class="step" id="step-6">
+    <div class="step-head"><div class="step-num">6</div><div><h3>The big build</h3><p class="step-meta">An afternoon · mostly waiting</p></div></div>
     <p><code>/goal</code> sets a finish line that Claude keeps working toward across many steps. It reads the wording literally, so write what you'll accept. Ask for the plan first and read it before you say go.</p>
     <p class="label">Type this</p>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>/goal build out our Spark replacement with every must-have row in docs/spark-parity.md, built on parent accounts with each child under them as SPARK-BRIEF.md describes, make check-in and past-due alerts excellent, and the whole thing uses The LAB brand through the design system and tokens. Every page works at phone and desktop width with no console errors.</pre></div>
     <p class="label">Before it codes</p>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Plan first, don't edit yet. Show me the shared foundation you'll write and how you'll split the work between helper agents, with the files each one owns.</pre></div>
     <p>Read the plan, then say "go". You can send messages while it works. When it reports back, ask to see the result: "show me every page at phone size."</p>
-    <label class="check"><input type="checkbox" data-step="5"> Every page opens on my phone and desktop without errors, and it's committed</label>
+    <label class="check"><input type="checkbox" data-step="6"> Every page opens on my phone and desktop without errors, and it's committed</label>
   </article>
 
-  <article class="step" id="step-6">
-    <div class="step-head"><div class="step-num">6</div><div><h3>Ship it with sample data</h3><p class="step-meta">1 hour</p></div></div>
+  <article class="step" id="step-7">
+    <div class="step-head"><div class="step-num">7</div><div><h3>Ship it with sample data</h3><p class="step-meta">1 hour</p></div></div>
     <p>A shared link with realistic sample data is how Travis, Ally and the coaches try it. GitHub Pages is free, and on a free account the site is public. Use sample data only.</p>
     <p class="label">Type these, one at a time</p>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Can we get this stood up on GitHub Pages so I can share it</pre></div>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Load this with dummy data that looks like The LAB: our real class names, parent accounts with one to three kids each, some with a second parent, active, past-due, frozen and cancelled memberships, and attendance. Mark it clearly as sample, and make sure it shows up on the live site.</pre></div>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>push to live once it's done and then test it in browser on live, not localhost</pre></div>
-    <label class="check"><input type="checkbox" data-step="6"> The live link works on my phone and shows sample data</label>
+    <label class="check"><input type="checkbox" data-step="7"> The live link works on my phone and shows sample data</label>
   </article>
 
-  <article class="step" id="step-7">
-    <div class="step-head"><div class="step-num">7</div><div><h3>Connect real data</h3><p class="step-meta">A few sessions · needs accounts</p></div></div>
+  <article class="step" id="step-8">
+    <div class="step-head"><div class="step-num">8</div><div><h3>Connect real data</h3><p class="step-meta">A few sessions · needs accounts</p></div></div>
     <p>Shared data across phones, real sign-ins, card payments and automatic texts all need a server. The LAB app (the <code>lab-skill-unlocks</code> repo) already has one, plus a Spark webhook that receives member status, past-due and join dates, check-in, and a consent log. Reuse it before building new.</p>
     <p class="label">Type this</p>
     <div class="prompt"><div class="prompt-bar"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>&lt;path to lab-skill-unlocks&gt; is our existing LAB app. It already has a Supabase backend with families, guardians and athletes, a Spark webhook, check-in and a consent log. Read it and tell me what we should reuse. Then plan how to move parent accounts, their kids, memberships and attendance onto it behind real sign-ins, where a parent sees only their own kids. Don't change that repo until I approve the plan.</pre></div>
     <div class="callout warn"><strong>Billing is the hard part</strong><p>Recurring card and bank payments need a processor (Stripe or similar), a server and your accounts. Decide who bills before you build it: the new app, or another system. Ask Spark in writing whether stored cards can move to the new processor. If they can't, families re-enter cards.</p></div>
-    <label class="check"><input type="checkbox" data-step="7"> A parent signs in and sees only their own kids, and none of it is on the public page</label>
+    <label class="check"><input type="checkbox" data-step="8"> A parent signs in and sees only their own kids, and none of it is on the public page</label>
   </article>
 
-  <article class="step" id="step-8">
-    <div class="step-head"><div class="step-num">8</div><div><h3>Cut over and cancel Spark</h3><p class="step-meta">Plan 45+ days ahead of the term end</p></div></div>
+  <article class="step" id="step-9">
+    <div class="step-head"><div class="step-num">9</div><div><h3>Cut over and cancel Spark</h3><p class="step-meta">Plan 45+ days ahead of the term end</p></div></div>
     <p>This step is a checklist, not a prompt. Do it in this order.</p>
     <ul class="list dash">
       <li>Find the term end date in the Spark contract. Put the non-renewal deadline, 30 days before it, on the calendar.</li>
@@ -328,7 +354,7 @@ footer a{color:var(--white)}
       <li>Move billing, then send the non-renewal notice in writing.</li>
     </ul>
     <div class="callout info"><strong>Ask Claude to check the exports</strong><p>Put the export files in a gitignored folder and ask: "Compare these Spark exports with the app's data and list every parent, kid or waiver that's missing, and every kid not linked to a parent." Real member data never goes in the public repo.</p></div>
-    <label class="check"><input type="checkbox" data-step="8"> Everything is exported and checked, and the notice is sent</label>
+    <label class="check"><input type="checkbox" data-step="9"> Everything is exported and checked, and the notice is sent</label>
   </article>
 </section>
 
@@ -374,7 +400,7 @@ footer a{color:var(--white)}
   <details><summary>"node is not recognized" on Windows</summary><div><p>Node isn't on the PATH. Reinstall Node from nodejs.org and restart VS Code, or tell Claude the error and let it fix the PATH for the session.</p></div></details>
   <details><summary>Buttons lost their colors</summary><div><p>A long-running dev server can serve old styles. Say: "restart the dev server."</p></div></details>
   <details><summary>Claude says it's done and I'm not sure</summary><div><p>Ask to see it: "Open every page at phone and desktop width, take screenshots, and show me any console errors." Read the screenshots yourself.</p></div></details>
-  <details><summary>It keeps listing things it can't finish</summary><div><p>Those rows need a server, accounts or your decision: payments, automatic texts, real sign-ins. Mark them "later" in the parity checklist, or do step 7.</p></div></details>
+  <details><summary>It keeps listing things it can't finish</summary><div><p>Those rows need a server, accounts or your decision: payments, automatic texts, real sign-ins. Mark them "later" in the parity checklist, or do step 8.</p></div></details>
   <details><summary>The conversation got long and confused</summary><div><p>Commit, then run <code>/clear</code> to start fresh. Claude rereads <code>CLAUDE.md</code> and the brief.</p></div></details>
   <details><summary>Commands worth knowing</summary><div><p><code>/help</code> lists commands. <code>/init</code> writes CLAUDE.md. <code>/goal</code> sets a finish line. <code>/clear</code> starts fresh. <code>/code-review</code> checks your changes for bugs before a big push.</p></div></details>
 </section>
@@ -436,6 +462,181 @@ footer a{color:var(--white)}
       }
     });
   });
+
+  // Glossary: the first use of each term in a card or step gets a tooltip.
+  // [title, plain explanation, pattern, case-sensitive, only in code snippets]
+  var TERMS = {
+    claudecode: ["Claude Code", "Claude working inside a folder on your computer. You say what you want in plain English, and it writes the code, runs it and tests it.", "Claude Code"],
+    terminal: ["Terminal", "A text window for typing commands to your computer. Using Claude Code inside VS Code means you can skip it.", "terminal"],
+    vscode: ["VS Code", "A free app for opening and editing the files in a project. Claude Code runs in a panel inside it.", "VS Code"],
+    node: ["Node.js", "Free software that runs the app on your computer while you build it. Install it once.", "Node(?:\\.js)?"],
+    pages: ["GitHub Pages", "GitHub's free website hosting. Each push to main updates the live site.", "GitHub Pages"],
+    github: ["GitHub", "A website that stores your project online and can host it as a website for free.", "GitHub"],
+    git: ["Git", "Software that saves checkpoints of your project, so you can see what changed and go back.", "Git", true],
+    repo: ["Repo", "Short for repository: the project folder plus its full history of saved checkpoints.", "repo(?:sitory)?"],
+    commit: ["Commit", "A saved checkpoint of the project, with a short note on what changed. Say \"commit this\" and Claude does it.", "commit(?:s|ted)?"],
+    push: ["Push", "Uploading your commits to GitHub. When the site deploys from main, a push publishes it.", "push(?:es|ing)?"],
+    main: ["main", "The project's main line of work. Here, whatever is on main is what the live site shows.", "main", true, true],
+    prompt: ["Prompt", "What you type to Claude. Plain English works best: say the outcome you want.", "prompts?"],
+    init: ["/init", "A command that has Claude write CLAUDE.md, a short description of your project.", "/init"],
+    claudemd: ["CLAUDE.md", "A notes file Claude reads at the start of every session: what the project is and how you like things done.", "CLAUDE\\.md"],
+    goal: ["/goal", "Sets a finish line. Claude keeps working, step after step, until what you wrote is true.", "/goal"],
+    clear: ["/clear", "Starts a fresh conversation. Your files stay as they are.", "/clear"],
+    help: ["/help", "Lists the commands Claude Code understands.", "/help"],
+    review: ["/code-review", "Has Claude check your latest changes for bugs before you publish them.", "/code-review"],
+    md: ["Markdown file", "A plain text document with simple formatting. Claude writes plans, briefs and checklists this way.", "[\\w/-]+\\.md"],
+    agents: ["Helper agents", "Extra copies of Claude that each do one job at the same time, such as reading Spark's help center or building one area of the app.", "helper agents?"],
+    parity: ["Parity", "Doing everything another product does, feature for feature.", "parity"],
+    lint: ["Lint", "An automatic check that reads the code and fails when a rule is broken, such as a color that isn't on the brand list.", "lint"],
+    tokens: ["Tokens", "Named settings the whole app shares, such as \"accent = cyan\". Change the token once and every screen updates.", "tokens?"],
+    ds: ["Design system", "The app's shared building blocks (colors, fonts, buttons, cards) plus the rules for using them, so every screen looks like The LAB.", "design system"],
+    components: ["Component library", "Ready-made pieces such as buttons, cards and forms that every page reuses.", "component library"],
+    styleguide: ["Style-guide page", "One page in the app that shows every color, font and component, so you can check the brand at a glance.", "style-guide page"],
+    hex: ["Hex code", "A six-character color code, such as #0F0E54 for The LAB's navy.", "hex(?: code)?"],
+    svg: ["SVG", "A logo file made of shapes instead of pixels. It stays sharp at any size and can be recolored.", "SVG", true],
+    png: ["PNG", "A picture file made of pixels. It can have a see-through background, but it blurs when blown up.", "PNG", true],
+    jpg: ["JPG", "A photo file. It can't be see-through, so a logo saved this way always has a background box.", "JPG", true],
+    transparent: ["Transparent", "See-through. A logo with a transparent background sits cleanly on any color.", "transparent"],
+    brandkit: ["Brand kit", "One folder with the logo files, colors and fonts, plus notes on how to use them.", "brand kit"],
+    localhost: ["localhost", "Your own computer acting as the website while you build. Only you can see it.", "localhost"],
+    live: ["Live site", "The real public website, as everyone else sees it.", "live (?:site|link)|on live"],
+    deploy: ["Deploy", "Putting a new version of the app on the live site.", "deploy(?:s|ed)?"],
+    basepath: ["Base path", "The part of the web address after the domain, such as /claude-code-class/. If the app gets it wrong, the live site loads blank.", "base path"],
+    fallback: ["404 fallback", "A copy of the main page that GitHub serves for unknown addresses, so links deep inside the app still open.", "404 fallback"],
+    console: ["Console errors", "Error messages the browser logs behind the scenes when part of a page breaks. Visitors don't see them, but Claude can.", "console errors?"],
+    devserver: ["Dev server", "A program that runs the app on your computer and refreshes it as Claude changes the code.", "dev server"],
+    server: ["Server", "A computer on the internet that holds shared data and does work for everyone: sign-ins, payments, texts. Without one, data stays on one device.", "servers?"],
+    supabase: ["Supabase", "A hosted database with sign-ins. The LAB app already uses it as its server.", "Supabase"],
+    database: ["Database", "Where the app keeps its records, such as families, kids and check-ins, so every phone sees the same data.", "database"],
+    webhook: ["Webhook", "A web address Spark calls by itself when something changes, such as a membership going past due, so our app hears about it right away.", "webhook"],
+    api: ["API", "A doorway that lets one program read or send data to another without anyone clicking through screens.", "APIs?", true],
+    csv: ["CSV", "A plain spreadsheet file. Spark's reports export to it, and Excel opens it.", "CSV", true],
+    gitignored: ["Gitignored", "Marked so Git never saves or uploads it. Use it for private files such as member exports or competitor screenshots.", "gitignored"],
+    path: ["PATH", "The list of places Windows looks for programs. When Node isn't on it, commands that need Node fail.", "PATH", true],
+    sample: ["Sample data", "Made-up families and members that look real, so you can test and demo without anyone's real details.", "(?:sample|dummy) (?:data|members|families)"],
+    processor: ["Payment processor", "A company such as Stripe that charges cards and bank accounts and sends the money to The LAB.", "processor"],
+    ach: ["ACH", "Bank-to-bank payments, such as autopay from a checking account.", "ACH", true],
+    crm: ["CRM", "Customer relationship management: the system that holds every member and lead, and your history with each one.", "CRM", true],
+    signin: ["Sign-in", "Proving who you are, such as a code texted to your phone, before the app shows private data.", "sign-ins?"]
+  };
+
+  // Longest pattern first, so "dev server" wins over "server". The catch-all .md pattern goes last.
+  var ids = Object.keys(TERMS).sort(function (a, b) { return (a === "md") - (b === "md") || TERMS[b][2].length - TERMS[a][2].length; });
+  var RES = {};
+  ids.forEach(function (id) {
+    var t = TERMS[id];
+    RES[id] = new RegExp("(?<![\\w/.-])(?:" + t[2] + ")(?![\\w-])", t[3] ? "" : "i");
+  });
+  var SKIP = "pre, .prompt, a, h1, h2, h3, label, button, .term, .nav, .stat, th, summary, .eyebrow, .step-meta, .label, .meter, .tip, script, style";
+  var SCOPE = "article, .card, .callout, details, .table-wrap, header, footer, section";
+  var used = new Map();
+  var n = 0;
+
+  function scopeOf(el) { return el.closest(SCOPE) || document.body; }
+  function seen(el) { var s = scopeOf(el); if (!used.has(s)) used.set(s, new Set()); return used.get(s); }
+  function mark(el, id) {
+    el.classList.add("term");
+    el.dataset.t = id;
+    el.tabIndex = 0;
+    el.setAttribute("aria-expanded", "false");
+    el.setAttribute("aria-describedby", "tip");
+  }
+
+  // Code snippets that are themselves a term (`/init`, `main`, `SPARK-BRIEF.md`).
+  document.querySelectorAll("code").forEach(function (c) {
+    if (c.closest(SKIP)) return;
+    var text = c.textContent.trim();
+    for (var i = 0; i < ids.length; i++) {
+      var m = text.match(RES[ids[i]]);
+      if (m && m[0] === text) { var s = seen(c); if (!s.has(ids[i])) { s.add(ids[i]); mark(c, ids[i]); } return; }
+    }
+  });
+
+  var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: function (node) {
+      var p = node.parentElement;
+      return !p || p.closest(SKIP) || p.closest("code") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  var queue = [];
+  while (walker.nextNode()) queue.push(walker.currentNode);
+  while (queue.length) {
+    var node = queue.shift();
+    var s = seen(node.parentElement);
+    var best = null;
+    ids.forEach(function (id) {
+      if (s.has(id) || TERMS[id][4]) return;
+      var m = RES[id].exec(node.data);
+      if (m && (!best || m.index < best.index || (m.index === best.index && m[0].length > best.text.length))) best = { id: id, index: m.index, text: m[0] };
+    });
+    if (!best) continue;
+    s.add(best.id);
+    var hit = node.splitText(best.index);
+    var rest = hit.splitText(best.text.length);
+    var span = document.createElement("span");
+    span.textContent = hit.data;
+    hit.replaceWith(span);
+    mark(span, best.id);
+    queue.unshift(rest);
+  }
+
+  var tip = document.createElement("div");
+  tip.className = "tip";
+  tip.id = "tip";
+  tip.setAttribute("role", "tooltip");
+  document.body.appendChild(tip);
+  var current = null;
+  var pointer = "mouse";
+
+  function show(el) {
+    if (current === el) return;
+    hide();
+    var t = TERMS[el.dataset.t];
+    tip.innerHTML = "";
+    var b = document.createElement("b");
+    b.textContent = t[0];
+    tip.appendChild(b);
+    tip.appendChild(document.createTextNode(t[1]));
+    tip.className = "tip";
+    var r = el.getBoundingClientRect();
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var cx = r.left + r.width / 2;
+    var left = Math.min(Math.max(cx - w / 2, 16), innerWidth - w - 16);
+    var below = r.bottom + 10 + h <= innerHeight - 16 || r.top - 10 - h < 16;
+    tip.style.left = left + "px";
+    tip.style.top = (below ? r.bottom + 10 : r.top - 10 - h) + "px";
+    tip.style.setProperty("--ax", Math.min(Math.max(cx - left, 18), w - 18) + "px");
+    tip.className = "tip show " + (below ? "below" : "above");
+    el.setAttribute("aria-expanded", "true");
+    current = el;
+  }
+  function hide() {
+    if (!current) return;
+    current.setAttribute("aria-expanded", "false");
+    tip.className = "tip";
+    current = null;
+  }
+
+  document.addEventListener("pointerdown", function (e) { pointer = e.pointerType; });
+  document.addEventListener("mouseover", function (e) {
+    var el = e.target.closest && e.target.closest(".term");
+    if (el && pointer === "mouse") show(el);
+  });
+  document.addEventListener("mouseout", function (e) {
+    var el = e.target.closest && e.target.closest(".term");
+    if (el && el === current && pointer === "mouse" && !el.contains(e.relatedTarget)) hide();
+  });
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest(".term");
+    if (!el) { hide(); return; }
+    if (pointer !== "mouse") { if (el === current) hide(); else show(el); }
+  });
+  // Focus opens it only from the keyboard; a tap already toggles it on click.
+  document.addEventListener("focusin", function (e) { if (pointer === "keyboard" && e.target.classList.contains("term")) show(e.target); });
+  document.addEventListener("focusout", function (e) { if (e.target === current) hide(); });
+  document.addEventListener("keydown", function (e) { pointer = "keyboard"; if (e.key === "Escape") hide(); });
+  addEventListener("scroll", hide, { passive: true });
+  addEventListener("resize", hide);
 })();
 </script>
 </body>
