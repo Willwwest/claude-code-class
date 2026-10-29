@@ -1,6 +1,6 @@
-# Claude Code class pack: building Spark the way we built Axis
+# Claude Code class pack: replacing Spark the way we built Axis
 
-This is the context a teaching agent needs to run a hands-on Claude Code class. The student is new to Claude Code. Over the course they build an app for their company's product, **Spark**, using the method that built the Axis Glass Tinting shop app in about two days.
+This is the context a teaching agent needs to run a hands-on Claude Code class. The student is new to Claude Code. The student is Charlie, owner of The LAB, a youth training gym in Glendale, AZ. Over the course, Charlie builds The LAB's own replacement for **Spark Membership**, the member CRM and billing software the gym pays for today. The method is the one that built the Axis Glass Tinting shop app in about two days. Spark plays the part Tint Wiz played for Axis: the product to match, then beat.
 
 ## Charlie's guide site
 
@@ -10,18 +10,18 @@ This is the context a teaching agent needs to run a hands-on Claude Code class. 
 
 1. Open a terminal in this folder and run `claude`. Claude Code reads `CLAUDE.md` automatically, and that file sets it up as the instructor.
 2. Say: "Start the class. Begin with the intake."
-3. The student does the building in their **own** session, in their own Spark project folder. The instructor session coaches.
+3. The student does the building in their **own** session, in their own project folder (`lab-spark`). The instructor session coaches.
 
 ## What's here
 
 | File | What it is |
 |---|---|
 | `CLAUDE.md` | Instructor role and teaching rules (loaded automatically) |
-| `spark-intake.md` | Questions to answer about Spark before building |
+| `spark-intake.md` | Questions about The LAB and its use of Spark, answered before building |
 | `lesson-plan.md` | Six sessions with goals, exercises and checkpoints |
 | `claude-code-basics.md` | The tool itself: install, permissions, goals, agents, memory, git, browser testing |
 | `playbook.md` | The method, step by step, with the reasoning behind each step |
-| `prompts.md` | Every prompt from the Axis build, what it did, and a Spark version of each |
+| `prompts.md` | Every prompt from the Axis build, what it did, and a version of each for the Spark replacement |
 | `axis-reference.md` | What Axis became: stack, structure, decisions, pitfalls |
 | `agent-briefs.md` | The 11 exact briefs given to helper agents (research, five feature builders, routing) |
 | `examples/tokens.css` | Two-layer brand design tokens |

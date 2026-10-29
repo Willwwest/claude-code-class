@@ -1,20 +1,20 @@
-# Spark intake (session 1, before any code)
+# Intake: The LAB and Spark (session 1, before any code)
 
-Answer these with the student and save the answers as `SPARK-BRIEF.md` in their Spark project. Every later prompt points at it. Leave a blank where you don't know an answer, rather than guessing.
+Answer these with the student and save the answers as `SPARK-BRIEF.md` in their project folder (`lab-spark`). Every later prompt points at it. Leave a blank where you don't know an answer, rather than guessing.
 
 ## The business and the app
 
-1. What does the company do, and who uses Spark (staff, customers, both)?
+1. What does The LAB do, and who uses Spark there today (front desk, coaches, managers, parents)?
 2. What problem should the first version solve? Describe it in one sentence, the way the Axis owner did: "keep track of tint stock from the jobs we do."
-3. Is Spark new, or does code already exist? If it exists: where is it, what's it built with, and what works today?
+3. What code already exists? The LAB app (`lab-skill-unlocks`) has families, check-in and a Spark webhook. What works today, and what should the replacement reuse?
 4. Who will use it on a phone, and who at a desk?
 4b. Parent and child accounts (the owner's top priority): one parent account with each kid under it. Can a family have two parents? Is a membership per kid or per family? One bill and one waiver per family? What does a parent see when signed in?
 
 ## The bar to clear
 
-5. Which product do they currently use, or wish they had? This is the "Tint Wiz" for Spark. Do they have a public help center, feature pages or YouTube tutorials? (Public sources only.)
+5. Spark is the product to match, as Tint Wiz was for Axis. Which Spark screens does the staff open every week, and which never? Spark's public sources: sparkmembership.com, help.sparkmembership.com and its YouTube tutorials.
 6. Which three features matter most? Which do they not care about?
-7. What would make it clearly better than that product? For Axis it was an instant quote, warranty certificates, referrals, low-stock alerts and a shortage forecast.
+7. What would make it clearly better than Spark? For Axis it was an instant quote, warranty certificates, referrals, low-stock alerts and a shortage forecast.
 
 ## Brand
 

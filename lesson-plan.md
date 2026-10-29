@@ -1,8 +1,8 @@
 # Lesson plan: six sessions
 
-Each session is about 60–90 minutes. The student types into their own Claude Code session in their Spark project folder. Every session ends with something that runs, plus a commit.
+Each session is about 60–90 minutes. The student types into their own Claude Code session in their project folder (`lab-spark`). Every session ends with something that runs, plus a commit.
 
-## Session 1: Meet the tool, define Spark
+## Session 1: Meet the tool, define the Spark replacement
 
 - Install and sign in, then run `claude` in an empty `spark` folder. Tour it: ask a question, approve a command, read a diff.
 - Complete `spark-intake.md` together and save it as `SPARK-BRIEF.md`.
@@ -20,13 +20,13 @@ Each session is about 60–90 minutes. The student types into their own Claude C
 ## Session 3: The brand and design system
 
 - Gather the brand kit (logo, colors, fonts). If there is none, Claude builds it from the website: it reads colors and fonts from the page styles, downloads the logo files (SVG first) and cuts out their backgrounds into transparent navy, white and black versions. Check each logo on light and dark backgrounds.
-- **Exercise:** "Set up a design system for Spark: brand tokens in two layers (brand primitives → semantic names), a component library, a style-guide page, and a lint that fails if any UI color is off the tokens." Compare with `examples/tokens.css` and `examples/tokenize.cjs`.
+- **Exercise:** "Set up a design system for our app: brand tokens in two layers (brand primitives → semantic names), a component library, a style-guide page, and a lint that fails if any UI color is off the tokens." Compare with `examples/tokens.css` and `examples/tokenize.cjs`.
 - **Teach:** what tokens are and why semantic names matter (theme changes become one edit); dark/light themes.
 - **Checkpoint:** the style-guide page renders on brand, and the lint passes.
 
 ## Session 4: The big build with `/goal`
 
-- **Exercise:** write the Spark `/goal` (template in prompts #5). Before coding, ask Claude for its plan: the foundation it will write first, and how it will split the work among agents. Review the plan.
+- **Exercise:** write the `/goal` for the Spark replacement (template in prompts #5). Before coding, ask Claude for its plan: the foundation it will write first, and how it will split the work among agents. Review the plan.
 - Let it run. Use the time to read `agent-briefs.md` and discuss what makes a good brief.
 - **Teach:**
   - goals as acceptance criteria;

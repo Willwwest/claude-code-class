@@ -1,6 +1,6 @@
-# The prompts that built Axis, and Spark versions
+# The prompts that built Axis, and versions for the Spark replacement
 
-Below are the owner's actual prompts, in order, with typos kept. Each has a note on what it did and why it worked, then a template the student can adapt for Spark. There were only ten. The leverage came from clear outcomes, real material and pushing back.
+Below are the owner's actual prompts, in order, with typos kept. Each has a note on what it did and why it worked, then a template the student can adapt for the Spark replacement. There were only ten. The leverage came from clear outcomes, real material and pushing back.
 
 ---
 
@@ -10,7 +10,7 @@ Below are the owner's actual prompts, in order, with typos kept. Each has a note
 
 **What happened:** Claude built a working stock tracker. Each job deducts film from a roll: by measurements, or by vehicle type with preset cut sizes.
 **Lesson:** describe the job to be done from the user's side ("so you know how much is left"), not a feature list.
-**Spark version:** `We're building an app for <company> that <does the core job> so that <who> can <outcome>. Start with just that.`
+**LAB version:** `We're building an app for The LAB that <does the core job> so that <who> can <outcome>. Start with just that.`
 
 ### 2. Look at it
 
@@ -18,7 +18,7 @@ Below are the owner's actual prompts, in order, with typos kept. Each has a note
 
 **What happened:** Claude started the dev server and gave a local URL.
 **Lesson:** look at the app early and often. Claude can open and test it itself.
-**Spark version:** same words.
+**LAB version:** same words.
 
 ### 3. Push back and raise the bar
 
@@ -26,7 +26,7 @@ Below are the owner's actual prompts, in order, with typos kept. Each has a note
 
 **What happened:** Claude surveyed the market and open-source projects and identified Tint Wiz as the leader.
 **Lesson:** saying "this feels basic" is a skill. Ask what the best tools in the industry do.
-**Spark version:** `This feels basic. What do <industry> companies actually use? Any open-source projects on GitHub we can learn from?`
+**LAB version:** `This feels basic. Besides Spark, what do youth gyms use? Any open-source projects on GitHub we can learn from?`
 
 ### 4. Research the target in depth
 
@@ -34,7 +34,7 @@ Below are the owner's actual prompts, in order, with typos kept. Each has a note
 
 **What happened:** four research agents read Tint Wiz's public help center (137 articles), feature pages and 59 tutorial videos. They wrote a feature-by-feature parity checklist with about 550 screenshots, kept in a gitignored folder. See `agent-briefs.md` #1–4 and `examples/docs/tintwiz-parity.md`.
 **Lesson:** a written checklist turns "make it like X" into testable work. Use public sources only, and keep competitor images private.
-**Spark version:** `Find screenshots, documentation and everything we'd need for parity with <competitor>. Public sources only. Write a feature checklist and keep screenshots in a gitignored folder.`
+**LAB version:** `Find screenshots, documentation and everything we'd need for parity with Spark Membership. Public sources only. Write a feature checklist and keep screenshots in a gitignored folder.`
 
 ### 5. Set the goal
 
@@ -46,7 +46,7 @@ Below are the owner's actual prompts, in order, with typos kept. Each has a note
 3. It integrated their work, then tested about 40 pages at desktop and phone width.
 
 **Lesson:** one goal states the finish line and the non-negotiables (the brand, the design system, the centerpiece feature). The goal is read literally, so phrase it as what you'll accept. "Full parity" later flagged items that need a server.
-**Spark version:** `/goal build out Spark with full parity for <competitor>, make sure <centerpiece feature> is excellent, and the whole thing uses our <brand> brand kit through a design system and tokens`
+**LAB version:** `/goal build out our Spark replacement with full parity for Spark Membership, make sure parent and child accounts and <centerpiece feature> are excellent, and the whole thing uses The LAB brand kit through a design system and tokens`
 
 ### 6. Share it
 
@@ -54,7 +54,7 @@ Below are the owner's actual prompts, in order, with typos kept. Each has a note
 
 **What happened:** Claude found an existing GitHub Pages workflow, committed, pushed and verified the live site.
 **Lesson:** shipping is part of the work. A push to the deploy branch is public, so it's a deliberate step.
-**Spark version:** same words.
+**LAB version:** same words.
 
 ### 7. Make the demo real
 
@@ -66,7 +66,7 @@ Below are the owner's actual prompts, in order, with typos kept. Each has a note
 - It made the live demo seed itself on first visit and show the demo PINs.
 
 **Lesson:** demos sell. Local, realistic sample data makes an app feel real. Make "visible on the live site" part of the ask.
-**Spark version:** `Load this with dummy data that looks like our real business (<regions/customers/products>), clearly marked as sample, and make sure it shows up on the live site.`
+**LAB version:** `Load this with dummy data that looks like The LAB (<classes/families/memberships>), clearly marked as sample, and make sure it shows up on the live site.`
 
 ### 8. Bring in existing code and open source
 
@@ -83,7 +83,7 @@ Below are the owner's actual prompts, in order, with typos kept. Each has a note
 - Describe outcomes for each user (the admin, the team members).
 - Let Claude evaluate open-source options and say what it found.
 
-**Spark version:** `<path> has <existing tech>. There's also open-source <thing> on GitHub. Integrate it so <user> can <outcome> and <other user> can <outcome>.`
+**LAB version:** `<path> has <existing tech>. There's also open-source <thing> on GitHub. Integrate it so <user> can <outcome> and <other user> can <outcome>.`
 
 ### 9. Set the standard
 
@@ -102,7 +102,7 @@ Below are the owner's actual prompts, in order, with typos kept. Each has a note
 3. It checked network calls and took screenshots.
 
 **Lesson:** say how you'll judge it. "On live, not localhost" catches deploy-only bugs such as base paths and blocked requests.
-**Spark version:** same words.
+**LAB version:** same words.
 
 ### Bonus: housekeeping prompts
 
